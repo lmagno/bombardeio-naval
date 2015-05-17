@@ -79,14 +79,3 @@ void escrever_mapa_arquivo(char **M,int linhas,int colunas){
   }
   fclose(mapa);
 }
-
-
-
-
-
-
-
-int main(){
-
-return 0;
-}
