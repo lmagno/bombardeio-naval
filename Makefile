@@ -3,6 +3,7 @@ CFLAGS=
 SRC=./src/
 SOURCES=$(SRC)test.c
 LFLAGS= -lmatriz
+MAIN=test
 
 MATRIZDIR=$(SRC)
 MATRIZC=$(MATRIZDIR)libmatriz.c
@@ -12,8 +13,8 @@ MATRIZLIB=$(MATRIZC:.c=.a)
 
 all: test
 
-test: $(SOURCES) $(MATRIZLIB) $(MATRIZH)
-	$(CC) $(CFLAGS) -static -o test $(SRC)test.c -L$(MATRIZDIR) $(LFLAGS)
+$(MAIN): $(SOURCES) $(MATRIZLIB) $(MATRIZH)
+	$(CC) $(CFLAGS) -static -o $(MAIN) $(SRC)$(MAIN).c -L$(MATRIZDIR) $(LFLAGS)
 
 .o.a:
 	ar rcs $@ $<
