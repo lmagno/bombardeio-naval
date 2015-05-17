@@ -20,7 +20,7 @@ for(i=0 ; i<n ; i++){
  free(M);
 }
 
-char ** leia_mapa(char** M){
+char ** leia_mapa(char** M, int *m, int *n){
   FILE *mapa;
   char nome[50];
   int linhas,colunas,i,j;
@@ -49,6 +49,8 @@ char ** leia_mapa(char** M){
       }
     }
   }
+  *m = linhas;
+  *n = colunas;
   return M;
 }
 
