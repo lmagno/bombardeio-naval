@@ -1,11 +1,12 @@
 #include <stdio.h>
-#include "matriz.h"
+#include "libmatriz.h"
 
 int main() {
     char **M;
+    int m, n;
 
-    leia_mapa(M);
-    escreva_mapa_tela(M);
-    LiberaMatriz(M);
+    leia_mapa(M, &m, &n);
+    escreva_mapa_tela(M, m, n);
+    LiberaMatriz(M, m);
     return 0;
 }
