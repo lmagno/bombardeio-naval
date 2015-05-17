@@ -2,16 +2,16 @@
 #include <stdlib.h>
 #include "libmatriz.h"
 
-struct MapaTag;
-typedef struct MapaTag {
+struct MapaTag {
     char **M;
     int m, n;
-} Mapa;
+};
+typedef struct MapaTag Mapa;
 
 Mapa* leia_mapa(){
     FILE *arq;
     Mapa *mapa = (Mapa *)malloc(sizeof(Mapa));
-    char **M;
+    char **M, c;
     char nome[50];
     int i, j, m, n;
 
@@ -32,7 +32,10 @@ Mapa* leia_mapa(){
 
     for(i = 0 ; i < m ; i++){
         for(j = 0 ; j < n ; j++){
-            fscanf(arq, "%c", &M[i][j]);
+            do    fscanf(arq, "%c", &c);
+            while (c == ' ' || c == '\t' || c == '\n');
+
+            M[i][j] = c;
         }
     }
 
@@ -62,10 +65,11 @@ void escreva_mapa_tela(Mapa *mapa){
             else
                 printf("-");
         }
+        printf("\n");
     }
 }
 
-int escrever_mapa_arquivo(Mapa *mapa){
+int escreva_mapa_arquivo(Mapa *mapa){
     char nome[50];
     char **M = mapa->M;
     int m = mapa->m,
@@ -92,4 +96,21 @@ int escrever_mapa_arquivo(Mapa *mapa){
 
     fclose(arq);
     return 0;
+}
+
+void libera_mapa(Mapa *mapa) {
+    libera_matriz(mapa->M, mapa->m);
+    free(mapa);
+}
+
+char** matriz(Mapa *mapa) {
+    return mapa->M;
+}
+
+int linhas(Mapa *mapa) {
+    return mapa->m;
+}
+
+int colunas(Mapa *mapa) {
+    return mapa->n;
 }
