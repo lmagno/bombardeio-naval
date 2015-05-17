@@ -2,8 +2,8 @@
 #include <stdlib.h>
 #include <string.h>
 
-char ** aloca_matriz(int m,int n){
-    char** M;
+char** aloca_matriz(int m,int n){
+    char **M;
     int i;
     M=(char **)malloc(m*sizeof(char *));
     for(i=0 ; i<m;i++){
