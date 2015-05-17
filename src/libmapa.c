@@ -2,6 +2,10 @@
 #include <stdlib.h>
 #include "libmatriz.h"
 
+void descarta_resto_linha(FILE *arq);
+char prox_elem(arq);
+
+
 struct MapaTag {
     char **M;
     int m, n;
@@ -28,15 +32,25 @@ Mapa* leia_mapa(){
     fscanf(arq, "%d", &m);
     fscanf(arq, "%d", &n);
 
+    descarta_resto_linha(arq);
+
     M = aloca_matriz(m, n);
 
     for(i = 0 ; i < m ; i++){
-        for(j = 0 ; j < n ; j++){
-            do    fscanf(arq, "%c", &c);
-            while (c == ' ' || c == '\t' || c == '\n');
-
+        j = 0;
+        c = prox_elem(arq);
+        while (c != '|' && c != '\n') {
             M[i][j] = c;
+            j++;
+
+            c = prox_elem(arq);
         }
+        if (j != n) {
+            printf("A linha %d tem %d elementos, equanto se esperava %d!\n", i+1, j, n);
+            exit(EXIT_FAILURE);
+        }
+
+        if (c == '|') descarta_resto_linha(arq);
     }
 
     fclose(arq);
@@ -45,6 +59,20 @@ Mapa* leia_mapa(){
     mapa->m = m;
     mapa->n = n;
     return mapa;
+}
+
+void descarta_resto_linha(FILE *arq) {
+    char c;
+    do fscanf(arq, "%c", &c);
+    while (c != '\n');
+}
+
+char prox_elem(arq) {
+    char c;
+    do fscanf(arq, "%c", &c);
+    while (c == ' ' || c == '\t');
+
+    return c;
 }
 
 void escreva_mapa_tela(Mapa *mapa){
