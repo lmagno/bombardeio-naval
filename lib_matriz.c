@@ -36,7 +36,7 @@ char ** leia_mapa(char** M){
 	fscanf(mapa,"%c",&M[i][j]);
       }
     }
-    fcolse(mapa);
+    fclose(mapa);
   }
   else{
     printf("arquivo não enontrado: digite o numero de linhas e colunas respectivamente para novo mapa");
@@ -49,7 +49,7 @@ char ** leia_mapa(char** M){
       }
     }
   }
-  return M; 
+  return M;
 }
 
 void escreva_mapa_tela(char **M,int linhas,int colunas){
@@ -79,14 +79,14 @@ void escrever_mapa_arquivo(char **M,int linhas,int colunas){
   }
   fclose(mapa);
 }
-  
-  
-	
+
+
+
 
 
 
 
 int main(){
-  
+
 return 0;
 }
