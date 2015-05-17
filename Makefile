@@ -25,4 +25,4 @@ $(MAIN): $(SOURCES) $(MATRIZLIB) $(MATRIZH)
 .PHONY: clean
 
 clean:
-	rm test src/*.a
+	rm -f test src/*.a src/*.o
