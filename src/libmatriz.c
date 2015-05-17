@@ -2,82 +2,58 @@
 #include <stdlib.h>
 #include <string.h>
 
-char ** aloca_matriz(int m,int n){
-    char** M;
+char** aloca_matriz(int m,int n){
+    char **M;
     int i;
     M=(char **)malloc(m*sizeof(char *));
     for(i=0 ; i<m;i++){
         M[i]=(char*)malloc(n*sizeof(char));
     }
-return M;
+    return M;
 }
 
-void libera_matriz(char **M,int n){
-int i;
-for(i=0 ; i<n ; i++){
-    free(M[i]);
-}
- free(M);
+void libera_matriz(char **M, int m){
+    int i;
+
+    for(i = 0 ; i < m ; i++){
+        free(M[i]);
+    }
+    free(M);
 }
 
-char ** leia_mapa(char** M, int *m, int *n){
-  FILE *mapa;
-  char nome[50];
-  int linhas,colunas,i,j;
-  printf("digite o nome do arquivo mapa: ");
-  scanf("%s",nome);
-  mapa=fopen(nome,"r");
-  if(mapa!=NULL){
+int leia_matriz(char *nome, char** M, int *m, int *n){
+    FILE *mapa;
+    int linhas, colunas, i, j;
+
+    mapa = fopen(nome,"r");
+    if(mapa == NULL){
+        printf("Arquivo não encontrado!");
+        return 1;
+    }
+
     fscanf(mapa,"%d",&linhas);
     fscanf(mapa,"%d",&colunas);
-    M=aloca_matriz(linhas,colunas);
-    for(i=0 ; i<linhas ; i++){
-      for(j=0 ; j<colunas ; j++){
-	fscanf(mapa,"%c",&M[i][j]);
-      }
+    M = aloca_matriz(linhas,colunas);
+
+    for(i = 0 ; i < linhas ; i++){
+        for(j = 0 ; j < colunas ; j++){
+            fscanf(mapa, "%c", &M[i][j]);
+        }
     }
+
     fclose(mapa);
-  }
-  else{
-    printf("arquivo não enontrado: digite o numero de linhas e colunas respectivamente para novo mapa");
-    scanf("%d",&linhas);
-    scanf("%d",&colunas);
-    M=aloca_matriz(linhas,colunas);
-    for(i=0 ; i<linhas ; i++){
-      for(j=0 ; j<colunas ; j++){
-	M[i][j]='.';
-      }
-    }
-  }
-  *m = linhas;
-  *n = colunas;
-  return M;
+    *m = linhas;
+    *n = colunas;
+    return 0;
 }
 
-void escreva_mapa_tela(char **M,int linhas,int colunas){
-  int i,j;
-  for(i=0 ; i<linhas ; i++){
-    for(j=0 ; j<colunas ; j++){
-      if(M[i][j]=='*'||M[i][j]=='!'||M[i][j]=='='||M[i][j]=='+'||M[i][j]=='B'||M[i][j]=='T')
-	printf("%c",M[i][j]);
-      else
-	printf("-");
-    }
-  }
-}
+void escreva_matriz_tela(char **M, int m, int n){
+    int i, j;
 
-void escrever_mapa_arquivo(char **M,int linhas,int colunas){
-  char nome[50];
-  FILE *mapa;
-  int i,j;
-  printf("digite o nome do mapa a ser salvo: \n");
-  scanf("%s",nome);
-  mapa=fopen(nome,"w");
-  fprintf(mapa,"%d %d\n\n",linhas,colunas);
-  for(i=0 ; i<linhas ; i++){
-    for(j=0 ; j<colunas ; j++){
-      fprintf(mapa,"%d ",M[i][j]);
+    for(i = 0 ; i < m ; i++){
+        for(j = 0 ; j < n ; j++){
+            printf("%c", M[i][j]);
+        }
+        printf("\n");
     }
-  }
-  fclose(mapa);
 }

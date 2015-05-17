@@ -2,15 +2,23 @@ CC=gcc
 CFLAGS=
 SRC=./src/
 SOURCES=$(SRC)test.c
-LFLAGS= -l$(MATRIZ) -l$(BARCO)
+LFLAGS=  -l$(MAPA) -l$(MATRIZ) -l$(BARCO)
+OBJS= $(MATRIZO) $(MAPAO) $(BARCOO)
 MAIN=test
 
-MATRIZDIR=$(SRC)
 MATRIZ=matriz
+MATRIZDIR=$(SRC)
 MATRIZC=$(MATRIZDIR)lib$(MATRIZ).c
 MATRIZH=$(MATRIZC:.c=.h)
 MATRIZO=$(MATRIZC:.c=.o)
 MATRIZLIB=$(MATRIZC:.c=.a)
+
+MAPA=mapa
+MAPADIR=$(SRC)
+MAPAC=$(MAPADIR)lib$(MAPA).c
+MAPAH=$(MAPAC:.c=.h)
+MAPAO=$(MAPAC:.c=.o)
+MAPALIB=$(MAPAC:.c=.a)
 
 BARCO=barco
 BARCODIR=$(SRC)
@@ -19,18 +27,18 @@ BARCOH=$(BARCOC:.c=.h)
 BARCOO=$(BARCOC:.c=.o)
 BARCOLIB=$(BARCOC:.c=.a)
 
-all: test
+all: $(MAIN)
 
-$(MAIN): $(SOURCES) $(MATRIZLIB) $(MATRIZH) $(BARCOLIB) $(BARCOH)
+$(MAIN): $(SOURCES) $(MATRIZLIB) $(MATRIZH) $(BARCOLIB) $(BARCOH) $(MAPALIB) $(MAPAH)
 	$(CC) $(CFLAGS) -static -o $(MAIN) $(SRC)$(MAIN).c -L$(SRC) $(LFLAGS)
 
 .o.a:
 	ar rcs $@ $<
 
-.c.o:
-	$(CC) $(CFLAGS) -o $@ -c $<
+# $(MAPAO): $(MAPAC) $(MATRIZLIB) $(MATRIZH)
+# 	$(CC) $(CFLAGS) -o $@ -c $< -L$(SRC) -l$(MATRIZ)
 
 .PHONY: clean
 
 clean:
-	rm -f test src/*.a src/*.o
+	rm -f $(MAIN) src/*.a src/*.o
