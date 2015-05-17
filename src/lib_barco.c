@@ -3,7 +3,7 @@
 #include <string.h>
 
 
-void poiciona_barco(char **M){
+void posiciona_barco(char **M){
   char boolean=0;
   int i,posicao;
   while(boolean==0){
@@ -59,4 +59,3 @@ char rema_barco(char **M,int linhas,int colunas){
   }
   return moveu;
 }
-
