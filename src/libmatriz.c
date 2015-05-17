@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-char ** AlocaMatriz(int m,int n){
+char ** aloca_matriz(int m,int n){
     char** M;
     int i;
     M=(char **)malloc(m*sizeof(char *));
@@ -12,7 +12,7 @@ char ** AlocaMatriz(int m,int n){
 return M;
 }
 
-void LiberaMatriz(char **M,int n){
+void libera_matriz(char **M,int n){
 int i;
 for(i=0 ; i<n ; i++){
     free(M[i]);
@@ -30,7 +30,7 @@ char ** leia_mapa(char** M, int *m, int *n){
   if(mapa!=NULL){
     fscanf(mapa,"%d",&linhas);
     fscanf(mapa,"%d",&colunas);
-    M=AlocaMatriz(linhas,colunas);
+    M=aloca_matriz(linhas,colunas);
     for(i=0 ; i<linhas ; i++){
       for(j=0 ; j<colunas ; j++){
 	fscanf(mapa,"%c",&M[i][j]);
@@ -42,7 +42,7 @@ char ** leia_mapa(char** M, int *m, int *n){
     printf("arquivo não enontrado: digite o numero de linhas e colunas respectivamente para novo mapa");
     scanf("%d",&linhas);
     scanf("%d",&colunas);
-    M=AlocaMatriz(linhas,colunas);
+    M=aloca_matriz(linhas,colunas);
     for(i=0 ; i<linhas ; i++){
       for(j=0 ; j<colunas ; j++){
 	M[i][j]='.';

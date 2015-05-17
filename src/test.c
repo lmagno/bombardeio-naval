@@ -7,6 +7,6 @@ int main() {
 
     leia_mapa(M, &m, &n);
     escreva_mapa_tela(M, m, n);
-    LiberaMatriz(M, m);
+    libera_matriz(M, m);
     return 0;
 }
