@@ -12,22 +12,10 @@ struct MapaTag {
 };
 typedef struct MapaTag Mapa;
 
-Mapa* leia_mapa(){
-    FILE *arq;
+Mapa* leia_mapa_arq(FILE *arq){
     Mapa *mapa = (Mapa *)malloc(sizeof(Mapa));
     char **M, c;
-    char nome[50];
     int i, j, m, n;
-
-    printf("Entre com o nome do arquivo que contém o mapa: ");
-    scanf("%s", nome);
-    arq = fopen(nome, "r");
-
-    while (arq == NULL) {
-        printf("Arquivo não encontrado, entre com o nome de um arquivo válido: ");
-        scanf("%s", nome);
-        arq = fopen(nome, "r");
-    }
 
     fscanf(arq, "%d", &m);
     fscanf(arq, "%d", &n);
@@ -53,11 +41,31 @@ Mapa* leia_mapa(){
         if (c == '|') descarta_resto_linha(arq);
     }
 
-    fclose(arq);
 
     mapa->M = M;
     mapa->m = m;
     mapa->n = n;
+    return mapa;
+}
+
+Mapa* leia_mapa_prompt(){
+    FILE *arq;
+    char nome[50];
+    Mapa *mapa;
+
+    printf("Entre com o nome do arquivo que contém o mapa: ");
+    scanf("%s", nome);
+    arq = fopen(nome, "r");
+
+    while (arq == NULL) {
+        printf("Arquivo não encontrado, entre com o nome de um arquivo válido: ");
+        scanf("%s", nome);
+        arq = fopen(nome, "r");
+    }
+
+    mapa = leia_mapa_arq(arq);
+
+    fclose(arq);
     return mapa;
 }
 
