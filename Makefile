@@ -1,11 +1,11 @@
-CC=gcc
-CFLAGS=
-MAIN=main
-SRC=./src/
-SOURCES=$(SRC)$(MAIN).c
-LIBS= barco matriz mapa
-DEPS= $(LIBS:%=$(SRC)lib%.a) $(LIBS:%=$(SRC)lib%.h)
-LFLAGS= $(LIBS:%=-l%)
+CC:=gcc
+CFLAGS:=
+MAIN:=main
+SRC:=./src/
+SOURCES:=$(SRC)$(MAIN).c
+LIBS:= barco matriz mapa
+DEPS:= $(LIBS:%=$(SRC)lib%.a) $(LIBS:%=$(SRC)lib%.h)
+LFLAGS:= $(LIBS:%=-l%)
 
 .PHONY: all clean very-clean
 
@@ -23,10 +23,12 @@ clean:
 very-clean:
 	rm -f $(TEST) $(MAIN) src/*.a src/*.o
 
-TEST=testes
-TESTDIR=./tests/
-TESTSOURCES=$(TESTDIR)$(TEST).c
+TEST:=testes
+TESTDIR:=./tests/
+TESTSOURCES:=$(wildcard $(TESTDIR)*.c)
+CUTESTDIR=./tests/cutest-1.5/
+CUTESTDEPS=$(CUTESTDIR)CuTest.c $(CUTESTDIR)CuTest.h
 
-testes: $(TESTSOURCES) $(DEPS)
-	$(CC) $(CFLAGS) -o $(TEST) $(TESTSOURCES) -L$(SRC) $(LFLAGS)
+testes: $(TESTSOURCES) $(DEPS) $(CUTESTDEPS)
+	$(CC) $(CFLAGS) -o $(TEST) $(TESTSOURCES) $(CUTESTDEPS) -L$(SRC) $(LFLAGS)
 	./testes
