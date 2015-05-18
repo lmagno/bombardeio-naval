@@ -94,7 +94,8 @@ void afunda_hidro_aviao(MapaTag mapa,int x_tiro,int y_tiro){
     mapa->M = M;
 }
 
-void afunda_embarcacao(MapaTag mapa,int x_tiro,int y_tiro){
+
+void afunda_embarcacao(MapaTag mapa,int x_tiro,int y_tiro){ /* Obsoleta? */
     char** M;
     M=mapa->M;
     if(M[x_tiro][y_tiro]=='D')
@@ -106,4 +107,90 @@ void afunda_embarcacao(MapaTag mapa,int x_tiro,int y_tiro){
     if(M[x_tiro][y_tiro]=='H')
         afunda_hidro_aviao(M,x_tiro,y_tiro);
     mapa->=M;
+}
+
+int sorteia(int k){
+    r = (int) (1 + (rand()/(RAND_MAX+1.0))*k);
+    return r;
+}
+
+void coordenadas_tiro(Mapa *mapa, int *x_tiro, int *y_tiro){
+    int m = colunas(mapa);
+    int n = linhas(mapa);
+
+    x_tiro = sorteia(m);
+    y_tiro = sorteia(n);
+}
+
+/* Incompleta */
+void dispara_tiros(Mapa *mapa){
+    int i;
+    int x_tiro, y_tiro;
+
+    for(i = 0; i < 3; i++) {
+        coordenadas_tiro(mapa, &x_tiro, &y_tiro);
+        
+    }
+}
+
+char identifica_alvo_atingido(Mapa* mapa, int x_tiro, int y_tiro) {
+    char **M = matriz(mapa);
+    char alvo_atingido = M[x_tiro][y_tiro];
+
+    /* Falta escrever no arquivo para cada caso! */
+
+    switch (alvo_atingido){
+    case 'D': /* Destroyer: */
+        afunda_destroyer(mapa, x_tiro, y_tiro);
+        M[x_tiro][y_tiro] = '*';
+        printf("O tiro acertou uma embarcacao!\n");
+        escreve_mapa_tela(mapa);
+        escreve_mapa_arquivo(mapa);
+        break;
+    case 'C': /* Cruzador: */
+        afunda_cruzador(mapa, x_tiro, y_tiro);
+        M[x_tiro][y_tiro] = '*';
+        printf("O tiro acertou uma embarcacao!\n");
+        escreve_mapa_tela(mapa);
+        escreve_mapa_arquivo(mapa);
+        break;
+    case 'P': /* Porta-avião: */
+        afunda_porta_aviao(mapa, x_tiro, y_tiro);
+        M[x_tiro][y_tiro] = '*';
+        printf("O tiro acertou uma embarcacao!\n");
+        escreve_mapa_tela(mapa);
+        escreve_mapa_arquivo(mapa);
+        break;
+    case 'H': /* Hidro-avião: */
+        afunda_hidro_aviao(mapa, x_tiro, y_tiro);
+        M[x_tiro][y_tiro] = '*';
+        printf("O tiro acertou uma embarcacao!\n");
+        escreve_mapa_tela(mapa);
+        escreve_mapa_arquivo(mapa);
+        break;
+    case 'S': /* Submarino: */
+        M[x_tiro][y_tiro] = '*';
+        printf("O tiro acertou uma embarcacao!\n");
+        escreve_mapa_tela(mapa);
+        escreve_mapa_arquivo(mapa);
+        break;
+    case 'B': /* Barco: */
+        M[x_tiro][y_tiro] = '!';
+        printf("O tiro acertou seu barco!\n");
+        escreve_mapa_tela(mapa);
+        escreve_mapa_arquivo(mapa);
+        break;
+    case 'T':
+        M[x_tiro][y_tiro] = '+';
+        printf("O tiro acertou parte do caminho percorrido por seu barco!\n");
+        escreve_mapa_tela(mapa);
+        escreve_mapa_arquivo(mapa);
+        break;
+    default:
+        M[x_tiro][y_tiro] = '=';
+        printf("O tiro acertou a agua!\n");
+        escreve_mapa_tela(mapa);
+        escreve_mapa_arquivo(mapa);
+        break;
+    }
 }
