@@ -2,7 +2,7 @@ CC=gcc
 CFLAGS=
 MAIN=test
 SRC=./src/
-SOURCES=$(SRC)test.c
+SOURCES=$(SRC)$(MAIN).c
 LIBS= barco matriz mapa
 DEPS= $(LIBS:%=$(SRC)lib%.a) $(LIBS:%=$(SRC)lib%.h)
 LFLAGS= $(LIBS:%=-l%)
@@ -12,14 +12,21 @@ LFLAGS= $(LIBS:%=-l%)
 all: $(MAIN)
 
 $(MAIN): $(SOURCES) $(DEPS)
-	$(CC) $(CFLAGS) -static -o $(MAIN) $(SRC)$(MAIN).c -L$(SRC) $(LFLAGS)
+	$(CC) $(CFLAGS) -static -o $(MAIN) $(SOURCES) -L$(SRC) $(LFLAGS)
 
 .o.a:
 	ar rcs $@ $<
-
 
 clean:
 	rm -f src/*.a src/*.o
 
 very-clean:
-	rm -f $(MAIN) src/*.a src/*.o
+	rm -f $(TEST) $(MAIN) src/*.a src/*.o
+
+TEST=testes
+TESTDIR=./tests/
+TESTSOURCES=$(TESTDIR)$(TEST).c
+
+testes: $(TESTSOURCES) $(DEPS)
+	$(CC) $(CFLAGS) -o $(TEST) $(TESTSOURCES) -L$(SRC) $(LFLAGS)
+	./testes
