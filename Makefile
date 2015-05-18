@@ -35,9 +35,6 @@ $(MAIN): $(SOURCES) $(MATRIZLIB) $(MATRIZH) $(BARCOLIB) $(BARCOH) $(MAPALIB) $(M
 .o.a:
 	ar rcs $@ $<
 
-# $(MAPAO): $(MAPAC) $(MATRIZLIB) $(MATRIZH)
-# 	$(CC) $(CFLAGS) -o $@ -c $< -L$(SRC) -l$(MATRIZ)
-
 .PHONY: clean
 
 clean:

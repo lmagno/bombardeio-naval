@@ -2,8 +2,8 @@
 #include <stdlib.h>
 #include "libmatriz.h"
 
-void descarta_resto_linha(FILE *arq);
-char prox_elem(arq);
+static void descarta_resto_linha(FILE *arq);
+static char prox_elem(FILE *arq);
 
 
 struct MapaTag {
@@ -61,13 +61,13 @@ Mapa* leia_mapa(){
     return mapa;
 }
 
-void descarta_resto_linha(FILE *arq) {
+static void descarta_resto_linha(FILE *arq) {
     char c;
     do fscanf(arq, "%c", &c);
     while (c != '\n');
 }
 
-char prox_elem(arq) {
+static char prox_elem(FILE *arq) {
     char c;
     do fscanf(arq, "%c", &c);
     while (c == ' ' || c == '\t');
