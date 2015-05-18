@@ -5,95 +5,105 @@
 void afunda_destroyer(MapaTag mapa,int x_tiro,int y_tiro){
     int i,j;
     char **M;
-    M=mapa ->M;
-    if(M[x_tiro][y_tiro]=='D')
+    M=matriz(mapa);
+    if(M[x_tiro][y_tiro]=='D'){
         M[x_tiro][y_tiro]='*';
-    if(x_tiro>0)
-        i=x_tiro-1;
-    else
-        i=0;
-    if(y_tiro>0)
-        j=y_tiro-1;
-    else
-        j=0;
-    for( ; i<=x_tiro+1||i<mapa->m ; i++){
-        for( ; j<=y_tiro+1||j<mapa->n ; j++){
-            if(M[i][j]=='D')
-                afunda_destroyer(mapa,i,j);
+        if(x_tiro>0)
+            i=x_tiro-1;
+        else
+            i=0;
+        if(y_tiro>0)
+            j=y_tiro-1;
+        else
+            j=0;
+        for( ; i<=x_tiro+1||i<mapa->m ; i++){
+            for( ; j<=y_tiro+1||j<mapa->n ; j++){
+	        if(M[i][j]=='D')
+	            afunda_destroyer(mapa,i,j);
+            }
         }
     }
-    mapa->M = M;
 }
-
-void afunda_cruzador(MapaTag mapa,int x_tiro,int y_tiro){
+void afunda_cruzador(Mapa mapa,int x_tiro,int y_tiro){
     int i,j;
     char **M;
-    M=mapa ->M;
-    if(M[x_tiro][y_tiro]=='C')
+    M=matriz(mapa);
+    if(M[x_tiro][y_tiro]=='C'){
         M[x_tiro][y_tiro]='*';
-    if(x_tiro>0)
-        i=x_tiro-1;
-    else
-        i=0;
-    if(y_tiro>0)
-        j=y_tiro-1;
-    else
-        j=0;
-    for( ; i<=x_tiro+1||i<mapa->m ; i++){
-        for( ; j<=y_tiro+1||j<mapa->n ; j++){
-            if(M[i][j]=='C')
-                afunda_destroyer(mapa,i,j);
+        if(x_tiro>0)
+            i=x_tiro-1;
+        else
+            i=0;
+        if(y_tiro>0)
+            j=y_tiro-1;
+        else
+            j=0;
+        for( ; i<=x_tiro+1||i<mapa->m ; i++){
+            for( ; j<=y_tiro+1||j<mapa->n ; j++){
+	        if(M[i][j]=='C')
+	            afunda_destroyer(mapa,i,j);
+            }
         }
     }
-    mapa->M = M;
 }
-
-void afunda_porta_aviao(MapaTag mapa,int x_tiro,int y_tiro){
+void afunda_porta_aviao(Mapa mapa,int x_tiro,int y_tiro){
     int i,j;
     char **M;
-    M=mapa ->M;
-    if(M[x_tiro][y_tiro]=='P')
+    M=matriz(mapa);
+    if(M[x_tiro][y_tiro]=='P'){
         M[x_tiro][y_tiro]='*';
-    if(x_tiro>0)
-        i=x_tiro-1;
-    else
-        i=0;
-    if(y_tiro>0)
-        j=y_tiro-1;
-    else
-        j=0;
-    for( ; i<=x_tiro+1||i<mapa->m ; i++){
-        for( ; j<=y_tiro+1||j<mapa->n ; j++){
-            if(M[i][j]=='P')
-                afunda_destroyer(mapa,i,j);
+        if(x_tiro>0)
+            i=x_tiro-1;
+        else
+            i=0;
+        if(y_tiro>0)
+            j=y_tiro-1;
+        else
+            j=0;
+        for( ; i<=x_tiro+1||i<mapa->m ; i++){
+            for( ; j<=y_tiro+1||j<mapa->n ; j++){
+	        if(M[i][j]=='P')
+	            afunda_destroyer(mapa,i,j);
+            }
         }
     }
-    mapa->M = M;
 }
 
-void afunda_hidro_aviao(MapaTag mapa,int x_tiro,int y_tiro){
+void afunda_hidro_aviao(Mapa mapa,int x_tiro,int y_tiro){
     int i,j;
     char **M;
-    M=mapa ->M;
-    if(M[x_tiro][y_tiro]=='H')
+    M=matriz(mapa);
+    if(M[x_tiro][y_tiro]=='H'){
         M[x_tiro][y_tiro]='*';
-    if(x_tiro>0)
-        i=x_tiro-1;
-    else
-        i=0;
-    if(y_tiro>0)
-        j=y_tiro-1;
-    else
-        j=0;
-    for( ; i<=x_tiro+1||i<mapa->m ; i++){
-        for( ; j<=y_tiro+1||j<mapa->n ; j++){
-            if(M[i][j]=='H')
-                afunda_destroyer(mapa,i,j);
+        if(x_tiro>0)
+            i=x_tiro-1;
+        else
+            i=0;
+        if(y_tiro>0)
+            j=y_tiro-1;
+        else
+            j=0;
+        for( ; i<=x_tiro+1||i<mapa->m ; i++){
+            for( ; j<=y_tiro+1||j<mapa->n ; j++){
+	        if(M[i][j]=='H')
+	            afunda_destroyer(mapa,i,j);
+            }
         }
     }
-    mapa->M = M;
 }
 
+
+void posiciona_barco(Mapa mapa){
+    int y_barco,boolean=0;
+    char **M=matriz(mapa);
+    while(boolean==0){
+        y_barco=sorteia(linhas(mapa));
+        if(M[0][y_barco]=='.'){
+            M[0][y_barco]='B';
+            boolean=1;
+        }
+    }
+}
 
 void afunda_embarcacao(MapaTag mapa,int x_tiro,int y_tiro){ /* Obsoleta? */
     char** M;
