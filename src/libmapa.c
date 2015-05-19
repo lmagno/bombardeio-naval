@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "libmatriz.h"
+#include "libutils.h"
 #include "libmapa.h"
 
 static void descarta_resto_linha(FILE *arq);

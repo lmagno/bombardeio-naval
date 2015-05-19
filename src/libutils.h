@@ -1,5 +1,5 @@
-#ifndef libmatriz_h__
-#define libmatriz_h__
+#ifndef libutils_h__
+#define libutils_h__
 
 extern char ** aloca_matriz(int m, int n);
 extern void libera_matriz(char **M, int m);

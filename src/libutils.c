@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "libutils.h"
 
 // Aloca uma matriz char mxn
 // e retorna seu ponteiro
@@ -25,7 +26,7 @@ void libera_matriz(char **M, int m){
     free(M);
 }
 
-// Recebe o ponteiro para uma matriz char mxn 
+// Recebe o ponteiro para uma matriz char mxn
 // e imprime todo seu conteúdo para a STDOUT
 void escreva_matriz_tela(char **M, int m, int n){
     int i, j;
