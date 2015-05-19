@@ -234,13 +234,13 @@ int dispara_tiros(Mapa *mapa){
             afunda_destroyer(mapa,x_tiro,y_tiro,0);
             break;
         case 'C':
-            afunda_cruzador(mapa,x_tiro,y_tiro);
+            afunda_cruzador(mapa,x_tiro,y_tiro,0);
             break;
         case 'P':
-            afunda_porta_aviao(mapa,x_tiro,y_tiro);
+            afunda_porta_aviao(mapa,x_tiro,y_tiro,0);
             break;
         case 'H':
-            afunda_hidro_aviao(mapa,x_tiro,y_tiro);
+            afunda_hidro_aviao(mapa,x_tiro,y_tiro,0);
             break;
         case 'B':
             fim_de_jogo = TRUE;
