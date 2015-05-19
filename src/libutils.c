@@ -56,3 +56,22 @@ char prox_elem(FILE *arq) {
 
     return c;
 }
+
+// Recebe o nome de um arquivo e uma string e a concatena
+// ao final desse arquivo.
+// Retorna:
+//     0: em caso de sucesso
+//     1: caso não consiga abrir o arquivo (erro)
+int anexa_arquivo(char *nome, char *str) {
+    FILE *arq;
+
+    arq = fopen(nome, "a");
+    if (arq == NULL) {
+        printf("Arquivo não pôde ser aberto! :/\n");
+        return 1;
+    }
+
+    fprintf(arq, "%s", str);
+    fclose(arq);
+    return 0;
+}
