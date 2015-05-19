@@ -5,6 +5,9 @@
 #include "libmapa.h"
 #include "libbarco.h"
 
+#define FALSE 0
+#define TRUE  1
+
 void posiciona_barco(char **M){
   char boolean=0;
   int i,posicao;
@@ -20,7 +23,7 @@ void posiciona_barco(char **M){
   }
 }
 
-void rema_barco(Mapa mapa, int *x_B, int *y_B){
+void rema_barco(Mapa *mapa, int *x_B, int *y_B){
     char ** M = matriz(mapa);
     char movimento;
     int x_barco,y_barco,moveu = FALSE;
