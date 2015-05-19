@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "./cutest-1.5/CuTest.h"
-#include "../src/libmatriz.h"
+#include "../src/libutils.h"
 
 void test_aloca_matriz_1x1(CuTest *tc);
 void test_aloca_matriz_1000x1000(CuTest *tc);
