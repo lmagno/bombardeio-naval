@@ -6,7 +6,7 @@
 void test_aloca_matriz_1x1(CuTest *tc);
 void test_aloca_matriz_1000x1000(CuTest *tc);
 
-CuSuite* test_matriz_get_suite() {
+CuSuite* test_utils_get_suite() {
     CuSuite* suite = CuSuiteNew();
     SUITE_ADD_TEST(suite, test_aloca_matriz_1x1);
     SUITE_ADD_TEST(suite, test_aloca_matriz_1000x1000);
