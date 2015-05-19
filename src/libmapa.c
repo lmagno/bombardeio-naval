@@ -3,8 +3,6 @@
 #include "libutils.h"
 #include "libmapa.h"
 
-static void descarta_resto_linha(FILE *arq);
-static char prox_elem(FILE *arq);
 
 // Tipo Mapa para guardar a matriz que representa o estado de um jogo
 // e suas dimensões mxn.
@@ -77,24 +75,6 @@ Mapa* leia_mapa_prompt(){
 
     fclose(arq);
     return mapa;
-}
-
-// Recebe o ponteiro para um arquivo e avança seu buffer até uma
-// quebra de linha.
-static void descarta_resto_linha(FILE *arq) {
-    char c;
-    do fscanf(arq, "%c", &c);
-    while (c != '\n');
-}
-
-// Recebe o ponteiro para um arquivo e avança seu buffer até o primeiro
-// caracter que não seja whitespace, retornando ele em seguida.
-static char prox_elem(FILE *arq) {
-    char c;
-    do fscanf(arq, "%c", &c);
-    while (c == ' ' || c == '\t');
-
-    return c;
 }
 
 // Recebe o ponteiro para um Mapa e imprime sua representação para a tela,

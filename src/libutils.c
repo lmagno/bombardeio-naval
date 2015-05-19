@@ -38,3 +38,21 @@ void escreva_matriz_tela(char **M, int m, int n){
         printf("\n");
     }
 }
+
+// Recebe o ponteiro para um arquivo e avança seu buffer até uma
+// quebra de linha.
+void descarta_resto_linha(FILE *arq) {
+    char c;
+    do fscanf(arq, "%c", &c);
+    while (c != '\n');
+}
+
+// Recebe o ponteiro para um arquivo e avança seu buffer até o primeiro
+// caracter que não seja whitespace, retornando ele em seguida.
+char prox_elem(FILE *arq) {
+    char c;
+    do fscanf(arq, "%c", &c);
+    while (c == ' ' || c == '\t');
+
+    return c;
+}
