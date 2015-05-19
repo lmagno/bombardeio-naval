@@ -20,7 +20,7 @@ typedef struct MapaTag Mapa;
 // Recebe o ponteiro para um arquivo em que esteja especificado um mapa
 // mxn para o jogo e retorna um ponteiro para o Mapa lido.
 // Termina o programa com erro se o formato não estiver correto.
-Mapa* leia_mapa_arq(FILE *arq){
+Mapa* leia_mapa_arquivo(FILE *arq){
     Mapa *mapa = (Mapa *)malloc(sizeof(Mapa));
     char **M, c;
     int i, j, m, n;
@@ -73,7 +73,7 @@ Mapa* leia_mapa_prompt(){
         arq = fopen(nome, "r");
     }
 
-    mapa = leia_mapa_arq(arq);
+    mapa = leia_mapa_arquivo(arq);
 
     fclose(arq);
     return mapa;
@@ -101,7 +101,7 @@ static char prox_elem(FILE *arq) {
 // ocultando as casas que o usuário não deve ver.
 void escreva_mapa_tela(Mapa *mapa){
     int i , j;
-    char **M = matriz(M);
+    char **M = matriz(mapa);
     int m = linhas(mapa),
         n = colunas(mapa);
 
@@ -121,29 +121,28 @@ void escreva_mapa_tela(Mapa *mapa){
     }
 }
 
-// Recebe o ponteiro para um Mapa e pede ao usuário que insira o nome
-// de um arquivo, então o grava nesse arquivo.
-int escreva_mapa_arquivo(Mapa *mapa){
-    char nome[50];
+// Recebe o nome de um arquivo e o ponteiro para um Mapa e concatena
+// sua representação ao final desse arquivo.
+// Retorna:
+//     0: em caso de sucesso
+//     1: caso não consiga abrir o arquivo (erro)
+int escreva_mapa_arquivo(char *nome, Mapa *mapa){
     char **M = matriz(mapa);
     int m = linhas(mapa),
         n = colunas(mapa);
     FILE *arq;
     int i, j;
 
-    printf("Entre com o nome do arquivo: ");
-    scanf("%s", nome);
-    arq = fopen(nome,"w");
+    arq = fopen(nome, "a");
     if (arq == NULL) {
-        printf("Arquivo não pôde ser criado. :/\n");
+        printf("Arquivo não pôde ser aberto! :/\n");
         return 1;
     }
 
-    fprintf(arq, "%d %d\n", m, n);
-
+    fprintf(arq, "\n");
     for(i = 0 ; i < m ; i++){
         for(j = 0 ; j < n ; j++){
-          fprintf(arq, "%d ", M[i][j]);
+          fprintf(arq, "%c ", M[i][j]);
         }
         printf("\n");
     }
