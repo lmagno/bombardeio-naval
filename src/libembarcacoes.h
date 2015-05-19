@@ -8,7 +8,7 @@ void afunda_hidro_aviao(Mapa *mapa,int x,int y, int d);
 void posiciona_barco(Mapa *mapa);
 int sorteia(int k);
 void coordenadas_tiro(Mapa *mapa, int *x_tiro, int *y_tiro);
-char identifica_alvo_atingido(Mapa *mapa, int x_tiro, int y_tiro);
-int dispara_tiros(Mapa *mapa);
+char identifica_alvo_atingido(Mapa *mapa, int x_tiro, int y_tiro, char* arquivo);
+int dispara_tiros(Mapa *mapa, char *arquivo);
 
 #endif

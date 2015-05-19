@@ -198,7 +198,7 @@ int dispara_tiros(Mapa *mapa, char *arquivo){
     for(i = 0; i < 3 && !fim_de_jogo; i++) {
 
         coordenadas_tiro(mapa, &x_tiro, &y_tiro);
-        alvo_atingido = identifica_alvo_atingido(mapa, x_tiro, y_tiro);
+        alvo_atingido = identifica_alvo_atingido(mapa, x_tiro, y_tiro, arquivo);
 
         switch(alvo_atingido){
         case 'D':
