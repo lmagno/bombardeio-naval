@@ -1,7 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "libutils.h"
 #include "libmapa.h"
+#include "libembarcacoes.h"
 
 #define FALSE 0
 #define TRUE  1
