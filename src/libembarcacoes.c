@@ -6,7 +6,7 @@
 #define FALSE 0
 #define TRUE  1
 
-/* afunda_destroyer: Aparentemente OK, necessita de testes; 
+/* afunda_destroyer: Aparentemente OK, necessita de testes;
 -Identação corrigida, serve de protótipo para as outras */
 
 /* d: distância do tiro em relação à casa a ser afetada pela função */
@@ -129,7 +129,7 @@ void posiciona_barco(Mapa *mapa){
 
 /* Obsoleta? */
 /*
-void afunda_embarcacao(MapaTag mapa,int x_tiro,int y_tiro){  
+void afunda_embarcacao(MapaTag mapa,int x_tiro,int y_tiro){
     char** M;
     M=mapa->M;
     if(M[x_tiro][y_tiro]=='D')
@@ -146,18 +146,19 @@ void afunda_embarcacao(MapaTag mapa,int x_tiro,int y_tiro){
 
 /* sorteia - Retorna um valor aleatório no intervalo 1...k */
 int sorteia(int k){
+    int r;
     r = (int) (1 + (rand()/(RAND_MAX+1.0))*k);
     return r;
 }
 
-/* coordenadas tiro - Determina as coordenadas de um tiro aleatório; 
+/* coordenadas tiro - Determina as coordenadas de um tiro aleatório;
    Retorna os valores em x_tiro e y_tiro */
 void coordenadas_tiro(Mapa *mapa, int *x_tiro, int *y_tiro){
     int m = colunas(mapa);
     int n = linhas(mapa);
 
-    x_tiro = sorteia(m);
-    y_tiro = sorteia(n);
+    *x_tiro = sorteia(m);
+    *y_tiro = sorteia(n);
 }
 
 /* identifica_alvo_atingido - Imprime as coordenadas de um tiro e a mensagem correspondente ao
@@ -213,11 +214,12 @@ char identifica_alvo_atingido(Mapa *mapa, int x_tiro, int y_tiro) {
 }
 
 /* dispara_tiros - Dispara 3 tiros, imprime as mensagens correspondentes aos efeitos dos
-tiros e atualiza a matriz; Retorna FALSE (0) caso o jogo continue, 
+tiros e atualiza a matriz; Retorna FALSE (0) caso o jogo continue,
 retorna TURE (1) caso o jogo termine. */
 int dispara_tiros(Mapa *mapa){
     int i;
     int x_tiro, y_tiro;
+    int alvo_atingido;
     int fim_de_jogo = FALSE;
 
     for(i = 0; i < 3 && !fim_de_jogo; i++) {
