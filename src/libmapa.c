@@ -20,7 +20,7 @@ typedef struct MapaTag Mapa;
 // Recebe o ponteiro para um arquivo em que esteja especificado um mapa
 // mxn para o jogo e retorna um ponteiro para o Mapa lido.
 // Termina o programa com erro se o formato não estiver correto.
-Mapa* leia_mapa_arq(FILE *arq){
+Mapa* leia_mapa_arquivo(FILE *arq){
     Mapa *mapa = (Mapa *)malloc(sizeof(Mapa));
     char **M, c;
     int i, j, m, n;
@@ -73,7 +73,7 @@ Mapa* leia_mapa_prompt(){
         arq = fopen(nome, "r");
     }
 
-    mapa = leia_mapa_arq(arq);
+    mapa = leia_mapa_arquivo(arq);
 
     fclose(arq);
     return mapa;
