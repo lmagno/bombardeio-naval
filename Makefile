@@ -3,7 +3,7 @@ CFLAGS:=
 MAIN:=main
 SRC:=./src/
 SOURCES:=$(SRC)$(MAIN).c
-LIBS:= barco matriz mapa
+LIBS:= embarcacoes barco matriz mapa
 DEPS:= $(LIBS:%=$(SRC)lib%.a) $(LIBS:%=$(SRC)lib%.h)
 LFLAGS:= $(LIBS:%=-l%)
 
