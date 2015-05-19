@@ -101,7 +101,7 @@ static char prox_elem(FILE *arq) {
 // ocultando as casas que o usuário não deve ver.
 void escreva_mapa_tela(Mapa *mapa){
     int i , j;
-    char **M = matriz(M);
+    char **M = matriz(mapa);
     int m = linhas(mapa),
         n = colunas(mapa);
 
