@@ -1,17 +1,25 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "libmatriz.h"
+#include "libmapa.h"
 
 static void descarta_resto_linha(FILE *arq);
 static char prox_elem(FILE *arq);
 
-
+// Tipo Mapa para guardar a matriz que representa o estado de um jogo
+// e suas dimensões mxn.
+// À struct é dado o nome de MapaTag somente para permitir que a
+// declaração de Mapa seja feita no header desta biblioteca sem que
+// se exporte a struct em si.
 struct MapaTag {
     char **M;
     int m, n;
 };
 typedef struct MapaTag Mapa;
 
+// Recebe o ponteiro para um arquivo em que esteja especificado um mapa
+// mxn para o jogo e retorna um ponteiro para o Mapa lido.
+// Termina o programa com erro se o formato não estiver correto.
 Mapa* leia_mapa_arq(FILE *arq){
     Mapa *mapa = (Mapa *)malloc(sizeof(Mapa));
     char **M, c;
@@ -48,6 +56,8 @@ Mapa* leia_mapa_arq(FILE *arq){
     return mapa;
 }
 
+// Pede que o usuário entre com o nome de um arquivo até que este seja aberto
+// com sucesso. Faz a leitura do mapa nele descrito e o retorna.
 Mapa* leia_mapa_prompt(){
     FILE *arq;
     char nome[50];
@@ -69,12 +79,16 @@ Mapa* leia_mapa_prompt(){
     return mapa;
 }
 
+// Recebe o ponteiro para um arquivo e avança seu buffer até uma
+// quebra de linha.
 static void descarta_resto_linha(FILE *arq) {
     char c;
     do fscanf(arq, "%c", &c);
     while (c != '\n');
 }
 
+// Recebe o ponteiro para um arquivo e avança seu buffer até o primeiro
+// caracter que não seja whitespace, retornando ele em seguida.
 static char prox_elem(FILE *arq) {
     char c;
     do fscanf(arq, "%c", &c);
@@ -83,11 +97,13 @@ static char prox_elem(FILE *arq) {
     return c;
 }
 
+// Recebe o ponteiro para um Mapa e imprime sua representação para a tela,
+// ocultando as casas que o usuário não deve ver.
 void escreva_mapa_tela(Mapa *mapa){
     int i , j;
-    char **M = mapa->M;
-    int m = mapa->m,
-        n = mapa->n;
+    char **M = matriz(M);
+    int m = linhas(mapa),
+        n = colunas(mapa);
 
     for(i = 0 ; i < m ; i++){
         for(j = 0 ; j < n ; j++){
@@ -105,11 +121,13 @@ void escreva_mapa_tela(Mapa *mapa){
     }
 }
 
+// Recebe o ponteiro para um Mapa e pede ao usuário que insira o nome
+// de um arquivo, então o grava nesse arquivo.
 int escreva_mapa_arquivo(Mapa *mapa){
     char nome[50];
-    char **M = mapa->M;
-    int m = mapa->m,
-        n = mapa->n;
+    char **M = matriz(mapa);
+    int m = linhas(mapa),
+        n = colunas(mapa);
     FILE *arq;
     int i, j;
 
@@ -134,19 +152,27 @@ int escreva_mapa_arquivo(Mapa *mapa){
     return 0;
 }
 
+// Recebe o ponteiro para um Mapa e libera a matriz nele contida,
+// além de seu próprio espaço alocado.
 void libera_mapa(Mapa *mapa) {
     libera_matriz(mapa->M, mapa->m);
     free(mapa);
 }
 
+// Recebe o ponteiro para um Mapa e retorna o ponteiro para a matriz
+// nele contida.
 char** matriz(Mapa *mapa) {
     return mapa->M;
 }
 
+// Recebe o ponteiro para um mapa e retorna o número de linhas que a matriz
+// nele contida tem.
 int linhas(Mapa *mapa) {
     return mapa->m;
 }
 
+// Recebe o ponteiro para um mapa e retorna o número de colunas que a matriz
+// nele contida tem.
 int colunas(Mapa *mapa) {
     return mapa->n;
 }
