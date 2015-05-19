@@ -9,15 +9,25 @@
 int main() {
     Mapa *mapa;
     char **M;
+    char arquivo[32];
     int x_barco, y_barco;
     int fim_de_jogo = FALSE;
+    int err = FALSE;
 
-    mapa = leia_mapa_prompt();
-    /* Mas precisamos da string com o nome do arquivo pra poder chamar dispara_tiros*/
+    printf("Entre com o nome do arquivo que contém o mapa: ");
+    scanf("%s", arquivo);
 
-    /*posiciona_barco();*/
+    err = leia_mapa_arquivo(mapa, arquivo);
+
+    while(err){
+        printf("Arquivo inválido. Insira o nome de um arquivo válido: ");
+        scanf("%s", arquivo);
+    }
+
+    posiciona_barco(mapa);
 
     escreva_mapa_tela(mapa);
+    escreva_mapa_arquivo(arquivo,mapa);
 
     while(!fim_de_jogo){
         rema_barco(mapa,x_barco,y_barco);        
@@ -25,5 +35,6 @@ int main() {
     }
 
     libera_mapa(mapa);
+
     return 0;
 }
