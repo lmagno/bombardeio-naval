@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "libmatriz.h"
+#include "libutils.h"
 #include "libmapa.h"
 
 int main() {
