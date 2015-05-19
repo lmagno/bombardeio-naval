@@ -8,19 +8,22 @@
 #define FALSE 0
 #define TRUE  1
 
-void posiciona_barco(char **M){
-  char boolean=0;
-  int i,posicao;
-  while(boolean==0){
-    printf("digite a posição inicial do barco");
-    scanf("%d",&posicao);
-    if(M[0][posicao]=='.'){
-      M[0][posicao]='B';
-      boolean=1;
+void posiciona_barco(Mapa *mapa){
+    char posicionou = FALSE;
+    int i, posicao;
+    char ** M = matriz(mapa);
+
+    while(!posicionou){
+        printf("Digite a posição inicial do barco: ");
+        scanf("%d", &posicao);
+
+        if(M[0][posicao] == '.'){
+            M[0][posicao] = 'B';
+            posicionou = TRUE;
+        }
+        else
+            printf("Posição não disponível.");
     }
-    else
-      printf("posicao nao disponivel");
-  }
 }
 
 void rema_barco(Mapa *mapa, int *x_B, int *y_B){
