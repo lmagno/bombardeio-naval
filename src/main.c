@@ -2,6 +2,7 @@
 #include "libutils.h"
 #include "libmapa.h"
 #include "libembarcacoes.h"
+#include "libbarco.h"
 
 #define FALSE 0
 #define TRUE 1
@@ -30,7 +31,7 @@ int main() {
     escreva_mapa_arquivo(arquivo,mapa);
 
     while(!fim_de_jogo){
-        rema_barco(mapa,x_barco,y_barco);        
+        rema_barco(mapa,x_barco,y_barco);
         fim_de_jogo = dispara_tiros(mapa, arquivo);
     }
 
