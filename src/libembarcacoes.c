@@ -112,40 +112,6 @@ void afunda_hidro_aviao(Mapa *mapa, int x, int y, int d){
     }
 }
 
-/* Isso não deveria estar aqui */
-/*
-void posiciona_barco(Mapa *mapa){
-    int y_barco;
-    int posicionou = FALSE;
-    char **M;
-    M = matriz(mapa);
-    while(!posicionou){
-        y_barco = sorteia(linhas(mapa));
-        if(M[0][y_barco] == '.'){
-            M[0][y_barco] = 'B';
-            posicionou = TRUE;
-        }
-    }
-}
-*/
-
-/* Obsoleta? */
-/*
-void afunda_embarcacao(MapaTag mapa,int x_tiro,int y_tiro){
-    char** M;
-    M=mapa->M;
-    if(M[x_tiro][y_tiro]=='D')
-        afunda_destroyer(M,x_tiro,y_tiro);
-    if(M[x_tiro][y_tiro]=='C')
-        afunda_cruzador(M,x_tiro,y_tiro);
-    if(M[x_tiro][y_tiro]=='P')
-        afunda_porta_aviao(M,x_tiro,y_tiro);
-    if(M[x_tiro][y_tiro]=='H')
-        afunda_hidro_aviao(M,x_tiro,y_tiro);
-    mapa->=M;
-}
-*/
-
 /* sorteia - Retorna um valor aleatório no intervalo 1...k */
 int sorteia(int k){
     int r;
@@ -165,8 +131,7 @@ void coordenadas_tiro(Mapa *mapa, int *x_tiro, int *y_tiro){
 
 /* identifica_alvo_atingido - Imprime as coordenadas de um tiro e a mensagem correspondente ao
 efeito desse tiro; Retorna o tipo de embarcação atingido (conforme convenção do mapa). */
-/* Falta escrever no arquivo as mensagens de cada caso */
-char identifica_alvo_atingido(Mapa *mapa, int x_tiro, int y_tiro) {
+char identifica_alvo_atingido(Mapa *mapa, int x_tiro, int y_tiro, char* arquivo) {
     char **M;
     char alvo_atingido;
 
@@ -175,40 +140,46 @@ char identifica_alvo_atingido(Mapa *mapa, int x_tiro, int y_tiro) {
 
     printf("Tiro em x = %d e y = %d!\n", x_tiro, y_tiro);
 
-    /* Falta escrever no arquivo para cada caso! */
-
     switch (alvo_atingido){
     case 'D': /* Destroyer: */
         M[x_tiro][y_tiro] = '*';
         printf("O tiro acertou um destroyer!\n");
+        anexa_arquivo(arquivo,"O tiro acertou um destroyer!\n");
         break;
     case 'C': /* Cruzador: */
         M[x_tiro][y_tiro] = '*';
         printf("O tiro acertou um cruzador!\n");
+        anexa_arquivo(arquivo,"O tiro acertou um cruzador!\n");
         break;
     case 'P': /* Porta-avião: */
         M[x_tiro][y_tiro] = '*';
         printf("O tiro acertou um porta-aviões!\n");
+        anexa_arquivo(arquivo,"O tiro acertou um porta-aviões!\n");
         break;
     case 'H': /* Hidro-avião: */
         M[x_tiro][y_tiro] = '*';
         printf("O tiro acertou um hidro-avião!\n");
+        anexa_arquivo(arquivo,"O tiro acertou um hidro-avião!\n");
         break;
     case 'S': /* Submarino: */
         M[x_tiro][y_tiro] = '*';
         printf("O tiro acertou um submarino!\n");
+        anexa_arquivo(arquivo,"O tiro acertou um submarino!\n");
         break;
     case 'B': /* Barco: */
         M[x_tiro][y_tiro] = '!';
         printf("O tiro acertou seu barco!\n");
+        anexa_arquivo(arquivo,"O tiro acertou seu barco!\n");
         break;
     case 'T':
         M[x_tiro][y_tiro] = '+';
         printf("O tiro acertou parte do caminho percorrido por seu barco!\n");
+        anexa_arquivo(arquivo,"O tiro acertou parte do caminho percorrido por seu barco!\n");
         break;
     default:
         M[x_tiro][y_tiro] = '=';
         printf("O tiro acertou a água!\n");
+        anexa_arquivo(arquivo,"O tiro acertou a água!\n");
         break;
     }
 
@@ -218,7 +189,7 @@ char identifica_alvo_atingido(Mapa *mapa, int x_tiro, int y_tiro) {
 /* dispara_tiros - Dispara 3 tiros, imprime as mensagens correspondentes aos efeitos dos
 tiros e atualiza a matriz; Retorna FALSE (0) caso o jogo continue,
 retorna TURE (1) caso o jogo termine. */
-int dispara_tiros(Mapa *mapa){
+int dispara_tiros(Mapa *mapa, char *arquivo){
     int i;
     int x_tiro, y_tiro;
     int alvo_atingido;
@@ -250,7 +221,7 @@ int dispara_tiros(Mapa *mapa){
         }
 
         escreva_mapa_tela(mapa);
-        /*escreva_mapa_arquivo(mapa, arquivo);*/
+        escreva_mapa_arquivo(arquivo, mapa);
     }
 
     return fim_de_jogo;
