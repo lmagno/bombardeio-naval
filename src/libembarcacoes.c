@@ -1,32 +1,32 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "libmapa.h"
 
 #define FALSE 0
 #define TRUE  1
 
-void afunda_destroyer(MapaTag mapa,int x_tiro,int y_tiro){
-    int i,j;
+/* afunda_destroyer: -Recursão aparentemente OK; -Identação corrigida, serve de protótipo para as outras */
+void afunda_destroyer(MapaTag mapa, int x_tiro, int y_tiro){
+    int i, j;
     char **M;
-    M=matriz(mapa);
-    if(M[x_tiro][y_tiro]=='D'){
-        M[x_tiro][y_tiro]='*';
-        if(x_tiro>0)
-            i=x_tiro-1;
-        else
-            i=0;
-        if(y_tiro>0)
-            j=y_tiro-1;
-        else
-            j=0;
-        for( ; i<=x_tiro+1||i<mapa->m ; i++){
-            for( ; j<=y_tiro+1||j<mapa->n ; j++){
-                if(M[i][j]=='D')
-                    afunda_destroyer(mapa,i,j);
-            }
-        }
-    }
+    M = matriz(mapa);
+
+    if(x_tiro > 0)
+        i = x_tiro-1;
+    else
+        i = 0;
+    if(y_tiro > 0)
+        j = y_tiro-1;
+    else
+        j = 0;
+
+    for(; i <= x_tiro + 1 || i < linhas(mapa); i++)
+        for(; j <= y_tiro + 1 || j < colunas(mapa); j++)
+            if(M[i][j]=='D')
+                afunda_destroyer(mapa,i,j);
 }
+
 void afunda_cruzador(Mapa mapa,int x_tiro,int y_tiro){
     int i,j;
     char **M;
@@ -99,7 +99,8 @@ void afunda_hidro_aviao(Mapa mapa,int x_tiro,int y_tiro){
 void posiciona_barco(Mapa mapa){
     int y_barco;
     int posicionou = FALSE;
-    char **M = matriz(mapa);
+    char **M;
+    M = matriz(mapa);
     while(!posicionou){
         y_barco = sorteia(linhas(mapa));
         if(M[0][y_barco] == '.'){
@@ -148,9 +149,10 @@ void dispara_tiros(Mapa mapa){
 }
 
 char identifica_alvo_atingido(Mapa mapa, int x_tiro, int y_tiro) {
-    char **M = matriz(mapa);
+    char **M;
     char alvo_atingido = M[x_tiro][y_tiro];
 
+    M =  matriz(mapa);
     /* Falta escrever no arquivo para cada caso! */
 
     switch (alvo_atingido){
