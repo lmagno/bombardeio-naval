@@ -2,6 +2,8 @@
 #include <stdlib.h>
 #include <string.h>
 
+// Aloca uma matriz char mxn
+// e retorna seu ponteiro
 char** aloca_matriz(int m,int n){
     char **M;
     int i;
@@ -12,6 +14,8 @@ char** aloca_matriz(int m,int n){
     return M;
 }
 
+// Recebe o ponteiro para uma matriz char M
+// e libera toda a memória alocada a ela
 void libera_matriz(char **M, int m){
     int i;
 
@@ -21,32 +25,8 @@ void libera_matriz(char **M, int m){
     free(M);
 }
 
-int leia_matriz(char *nome, char** M, int *m, int *n){
-    FILE *mapa;
-    int linhas, colunas, i, j;
-
-    mapa = fopen(nome,"r");
-    if(mapa == NULL){
-        printf("Arquivo não encontrado!");
-        return 1;
-    }
-
-    fscanf(mapa,"%d",&linhas);
-    fscanf(mapa,"%d",&colunas);
-    M = aloca_matriz(linhas,colunas);
-
-    for(i = 0 ; i < linhas ; i++){
-        for(j = 0 ; j < colunas ; j++){
-            fscanf(mapa, "%c", &M[i][j]);
-        }
-    }
-
-    fclose(mapa);
-    *m = linhas;
-    *n = colunas;
-    return 0;
-}
-
+// Recebe o ponteiro para uma matriz char mxn 
+// e imprime todo seu conteúdo para a STDOUT
 void escreva_matriz_tela(char **M, int m, int n){
     int i, j;
 
