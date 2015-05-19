@@ -23,8 +23,8 @@ typedef struct MapaTag Mapa;
 //     int 0: em caso de sucesso.
 //     int 1: caso não consiga abrir o arquivo
 //     int 2: caso o mapa esteja em formato errado.
-int leia_mapa_arquivo(Mapa *mapa, char *nome){
-    mapa = (Mapa *)malloc(sizeof(Mapa));
+int leia_mapa_arquivo(Mapa **mapa, char *nome){
+    *mapa = malloc(sizeof(Mapa));
     FILE *arq;
     char **M, c;
     int i, j, m, n;
@@ -53,15 +53,15 @@ int leia_mapa_arquivo(Mapa *mapa, char *nome){
         if (j != n) {
             // Mensagens de erro ficam pro futuro
             // printf("A linha %d tem %d elementos, equanto se esperava %d!\n", i+1, j, n);
-            return(2);
+            return 2;
         }
 
         if (c == '|') descarta_resto_linha(arq);
     }
 
-    mapa->M = M;
-    mapa->m = m;
-    mapa->n = n;
+    (*mapa)->M = M;
+    (*mapa)->m = m;
+    (*mapa)->n = n;
     fclose(arq);
     return 0;
 }
