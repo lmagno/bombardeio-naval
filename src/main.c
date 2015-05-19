@@ -17,7 +17,7 @@ int main() {
     printf("Entre com o nome do arquivo que contém o mapa: ");
     scanf("%s", arquivo);
 
-    err = leia_mapa_arquivo(mapa, arquivo);
+    err = leia_mapa_arquivo(&mapa, arquivo);
 
     while(err){
         printf("Arquivo inválido. Insira o nome de um arquivo válido: ");

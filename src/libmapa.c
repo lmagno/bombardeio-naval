@@ -113,7 +113,7 @@ int escreva_mapa_arquivo(char *nome, Mapa *mapa){
         for(j = 0 ; j < n ; j++){
           fprintf(arq, "%c ", M[i][j]);
         }
-        printf("\n");
+        fprintf(arq,"\n");
     }
 
     fclose(arq);
