@@ -2,6 +2,9 @@
 #include <stdlib.h>
 #include <string.h>
 
+#define FALSE 0
+#define TRUE  1
+
 void afunda_destroyer(MapaTag mapa,int x_tiro,int y_tiro){
     int i,j;
     char **M;
@@ -18,8 +21,8 @@ void afunda_destroyer(MapaTag mapa,int x_tiro,int y_tiro){
             j=0;
         for( ; i<=x_tiro+1||i<mapa->m ; i++){
             for( ; j<=y_tiro+1||j<mapa->n ; j++){
-	        if(M[i][j]=='D')
-	            afunda_destroyer(mapa,i,j);
+                if(M[i][j]=='D')
+                    afunda_destroyer(mapa,i,j);
             }
         }
     }
@@ -40,8 +43,8 @@ void afunda_cruzador(Mapa mapa,int x_tiro,int y_tiro){
             j=0;
         for( ; i<=x_tiro+1||i<mapa->m ; i++){
             for( ; j<=y_tiro+1||j<mapa->n ; j++){
-	        if(M[i][j]=='C')
-	            afunda_destroyer(mapa,i,j);
+                if(M[i][j]=='C')
+                    afunda_cruzador(mapa,i,j);
             }
         }
     }
@@ -62,8 +65,8 @@ void afunda_porta_aviao(Mapa mapa,int x_tiro,int y_tiro){
             j=0;
         for( ; i<=x_tiro+1||i<mapa->m ; i++){
             for( ; j<=y_tiro+1||j<mapa->n ; j++){
-	        if(M[i][j]=='P')
-	            afunda_destroyer(mapa,i,j);
+                if(M[i][j]=='P')
+                    afunda_porta_aviao(mapa,i,j);
             }
         }
     }
@@ -85,8 +88,8 @@ void afunda_hidro_aviao(Mapa mapa,int x_tiro,int y_tiro){
             j=0;
         for( ; i<=x_tiro+1||i<mapa->m ; i++){
             for( ; j<=y_tiro+1||j<mapa->n ; j++){
-	        if(M[i][j]=='H')
-	            afunda_destroyer(mapa,i,j);
+                if(M[i][j]=='H')
+                    afunda_hidro_aviao(mapa,i,j);
             }
         }
     }
@@ -94,13 +97,14 @@ void afunda_hidro_aviao(Mapa mapa,int x_tiro,int y_tiro){
 
 
 void posiciona_barco(Mapa mapa){
-    int y_barco,boolean=0;
-    char **M=matriz(mapa);
-    while(boolean==0){
-        y_barco=sorteia(linhas(mapa));
-        if(M[0][y_barco]=='.'){
-            M[0][y_barco]='B';
-            boolean=1;
+    int y_barco;
+    int posicionou = FALSE;
+    char **M = matriz(mapa);
+    while(!posicionou){
+        y_barco = sorteia(linhas(mapa));
+        if(M[0][y_barco] == '.'){
+            M[0][y_barco] = 'B';
+            posicionou = TRUE;
         }
     }
 }
@@ -124,7 +128,7 @@ int sorteia(int k){
     return r;
 }
 
-void coordenadas_tiro(Mapa *mapa, int *x_tiro, int *y_tiro){
+void coordenadas_tiro(Mapa mapa, int *x_tiro, int *y_tiro){
     int m = colunas(mapa);
     int n = linhas(mapa);
 
@@ -133,7 +137,7 @@ void coordenadas_tiro(Mapa *mapa, int *x_tiro, int *y_tiro){
 }
 
 /* Incompleta */
-void dispara_tiros(Mapa *mapa){
+void dispara_tiros(Mapa mapa){
     int i;
     int x_tiro, y_tiro;
 
@@ -143,7 +147,7 @@ void dispara_tiros(Mapa *mapa){
     }
 }
 
-char identifica_alvo_atingido(Mapa* mapa, int x_tiro, int y_tiro) {
+char identifica_alvo_atingido(Mapa mapa, int x_tiro, int y_tiro) {
     char **M = matriz(mapa);
     char alvo_atingido = M[x_tiro][y_tiro];
 
