@@ -24,7 +24,7 @@ typedef struct MapaTag Mapa;
 //     int 1: caso não consiga abrir o arquivo
 //     int 2: caso o mapa esteja em formato errado.
 int leia_mapa_arquivo(Mapa *mapa, char *nome){
-    Mapa *mapa = (Mapa *)malloc(sizeof(Mapa));
+    mapa = (Mapa *)malloc(sizeof(Mapa));
     FILE *arq;
     char **M, c;
     int i, j, m, n;
