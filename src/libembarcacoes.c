@@ -6,19 +6,22 @@
 #define FALSE 0
 #define TRUE  1
 
-/* afunda_destroyer: -Recursão aparentemente OK; -Identação corrigida, serve de protótipo para as outras */
+/* afunda_destroyer: -Recursão deficiente pelo conflito do * na casa inicial; -Identação corrigida, serve de protótipo para as outras */
 void afunda_destroyer(Mapa mapa, int x_tiro, int y_tiro){
     int i, j;
     char **M;
     M = matriz(mapa);
-    if(M[x_tiro][y_tiro] == 'D'){
-	M[x_tiro][y_tiro] = '*';
+
+    if(M[x_tiro][y_tiro]=='D'){
+
+        M[x_tiro][y_tiro]='*';
+
         if(x_tiro > 0)
-            i = x_tiro - 1;
+            i = x_tiro-1;
         else
             i = 0;
         if(y_tiro > 0)
-            j = y_tiro - 1;
+            j = y_tiro-1;
         else
             j = 0;
 
@@ -33,44 +36,44 @@ void afunda_cruzador(Mapa mapa,int x_tiro,int y_tiro){
     int i,j;
     char **M;
     M=matriz(mapa);
-    if(M[x_tiro][y_tiro] == 'C'){
-        M[x_tiro][y_tiro] = '*';
-        if(x_tiro > 0)
-            i = x_tiro - 1;
+    if(M[x_tiro][y_tiro]=='C'){
+        M[x_tiro][y_tiro]='*';
+        if(x_tiro>0)
+            i=x_tiro-1;
         else
-            i = 0;
-        if(y_tiro > 0)
-            j = y_tiro - 1;
+            i=0;
+        if(y_tiro>0)
+            j=y_tiro-1;
         else
-            j = 0;
-        for(; i <= x_tiro + 1 || i < linhas(mapa); i++)
-            for(; j <= y_tiro + 1 || j < colunas(mapa); j++)
+            j=0;
+        for( ; i<=x_tiro+1||i<mapa->m ; i++){
+            for( ; j<=y_tiro+1||j<mapa->n ; j++){
                 if(M[i][j]=='C')
                     afunda_cruzador(mapa,i,j);
-            
-        
+            }
+        }
     }
 }
 void afunda_porta_aviao(Mapa mapa,int x_tiro,int y_tiro){
     int i,j;
     char **M;
     M=matriz(mapa);
-    if(M[x_tiro][y_tiro] == 'P'){
-        M[x_tiro][y_tiro] = '*';
-        if(x_tiro > 0)
+    if(M[x_tiro][y_tiro]=='P'){
+        M[x_tiro][y_tiro]='*';
+        if(x_tiro>0)
             i=x_tiro-1;
         else
             i=0;
-        if(y_tiro > 0)
+        if(y_tiro>0)
             j=y_tiro-1;
         else
             j=0;
-        for( ; i <= x_tiro + 1 || i < linhas(mapa); i++)
-            for( ; j <= y_tiro + 1 || j < colunas(mapa); j++)
-                if(M[i][j] == 'P')
+        for( ; i<=x_tiro+1||i<mapa->m ; i++){
+            for( ; j<=y_tiro+1||j<mapa->n ; j++){
+                if(M[i][j]=='P')
                     afunda_porta_aviao(mapa,i,j);
-            
-        
+            }
+        }
     }
 }
 
@@ -78,22 +81,22 @@ void afunda_hidro_aviao(Mapa mapa,int x_tiro,int y_tiro){
     int i,j;
     char **M;
     M=matriz(mapa);
-    if(M[x_tiro][y_tiro] == 'H'){
-        M[x_tiro][y_tiro] = '*';
-        if(x_tiro > 0)
-            i = x_tiro - 1;
+    if(M[x_tiro][y_tiro]=='H'){
+        M[x_tiro][y_tiro]='*';
+        if(x_tiro>0)
+            i=x_tiro-1;
         else
-            i = 0;
-        if(y_tiro > 0)
-            j = y_tiro - 1;
+            i=0;
+        if(y_tiro>0)
+            j=y_tiro-1;
         else
-            j = 0;
-        for( ; i <= x_tiro + 1 || i < linhas(mapa); i++)
-            for( ; j <= y_tiro + 1 || j < colunas(mapa); j++)
-                if(M[i][j] == 'H')
+            j=0;
+        for( ; i<=x_tiro+1||i<mapa->m ; i++){
+            for( ; j<=y_tiro+1||j<mapa->n ; j++){
+                if(M[i][j]=='H')
                     afunda_hidro_aviao(mapa,i,j);
-            
-        
+            }
+        }
     }
 }
 
@@ -112,68 +115,8 @@ void posiciona_barco(Mapa mapa){
     }
 }
 
-void rema_barco(Mapa mapa, int  *x_B,int *y_B){
-    char ** M = matriz(mapa);
-    char movimento;
-    int x_barco,y_barco,moveu = FALSE;
-    x_barco = *x_B;
-    y_barco = *y_B;
-    scanf("%c",&movimento);
-    if(movimento == 'c' && y_barco > 0){
-	if(M[x_barco][y_barco - 1] != 'D' || \
-	   M[x_barco][y_barco - 1] != 'S' || \
-	   M[x_barco][y_barco - 1] != 'H' || \
-	   M[x_barco][y_barco - 1] != 'P' || \
-	   M[x_barco][y_barco - 1] != 'C' ){
-	    M[x_barco][y_barco] = 'T';
-	    M[x_barco][y_barco - 1] = 'B';
-	    moveu = TRUE;
-	    y_barco--;
-	}
-    }    
-    if(movimento == 'b' && y_barco < linhas(mapa)){
-	if(M[x_barco][y_barco + 1] != 'D' || \
-	   M[x_barco][y_barco + 1] != 'S' || \
-	   M[x_barco][y_barco + 1] != 'H' || \
-	   M[x_barco][y_barco + 1] != 'P' || \
-	   M[x_barco][y_barco + 1] != 'C' ){
-	    M[x_barco][y_barco] = 'T';
-	    M[x_barco][y_barco + 1] = 'B';
-	    moveu = TRUE;
-	    y_barco++;
-	}
-    }    
-    if(movimento == 'e' && x_barco > 0){
-	if(M[x_barco - 1][y_barco] != 'D' || \
-	   M[x_barco - 1][y_barco] != 'S' || \
-	   M[x_barco - 1][y_barco] != 'H' || \
-	   M[x_barco - 1][y_barco] != 'P' || \
-	   M[x_barco - 1][y_barco] != 'C' ){
-	    M[x_barco][y_barco] = 'T';
-	    M[x_barco - 1][y_barco] = 'B';
-	    moveu = TRUE;
-	    x_barco--;
-	}
-    }    
-    if(movimento == 'd' && x_barco < colunas(mapa)){
-	if(M[x_barco + 1][y_barco] != 'D' || \
-	   M[x_barco + 1][y_barco] != 'S' || \
-	   M[x_barco + 1][y_barco] != 'H' || \
-	   M[x_barco + 1][y_barco] != 'P' || \
-	   M[x_barco + 1][y_barco] != 'C' ){
-	    M[x_barco][y_barco] = 'T';
-	    M[x_barco + 1][y_barco] = 'B';
-	    moveu = TRUE;
-	    x_barco++;
-	}
-    }    
-    *x_B = x_barco;
-    *y_B = y_barco;
-}
-
-
-
-void afunda_embarcacao(MapaTag mapa,int x_tiro,int y_tiro){ /* Obsoleta? */
+/* Obsoleta? */
+/*void afunda_embarcacao(MapaTag mapa,int x_tiro,int y_tiro){  
     char** M;
     M=mapa->M;
     if(M[x_tiro][y_tiro]=='D')
@@ -185,13 +128,16 @@ void afunda_embarcacao(MapaTag mapa,int x_tiro,int y_tiro){ /* Obsoleta? */
     if(M[x_tiro][y_tiro]=='H')
         afunda_hidro_aviao(M,x_tiro,y_tiro);
     mapa->=M;
-}
+}*/
 
+/* sorteia - Retorna um valor aleatório no intervalo 1...k */
 int sorteia(int k){
     r = (int) (1 + (rand()/(RAND_MAX+1.0))*k);
     return r;
 }
 
+/* coordenadas tiro - Determina as coordenadas de um tiro aleatório; 
+   Retorna os valores em x_tiro e y_tiro */
 void coordenadas_tiro(Mapa mapa, int *x_tiro, int *y_tiro){
     int m = colunas(mapa);
     int n = linhas(mapa);
@@ -200,56 +146,85 @@ void coordenadas_tiro(Mapa mapa, int *x_tiro, int *y_tiro){
     y_tiro = sorteia(n);
 }
 
-/* Incompleta */
-void dispara_tiros(Mapa mapa){
+/* dispara_tiros - Dispara 3 tiros, imprime as mensagens correspondentes aos efeitos dos
+tiros e atualiza a matriz; Retorna FALSE (0) caso o jogo continue, 
+retorna TURE (1) caso o jogo terminou. */
+int dispara_tiros(Mapa mapa){
     int i;
     int x_tiro, y_tiro;
+    int fim_de_jogo = FALSE;
 
-    for(i = 0; i < 3; i++) {
+    for(i = 0; i < 3 && !fim_de_jogo; i++) {
+
         coordenadas_tiro(mapa, &x_tiro, &y_tiro);
-        
+        alvo_atingido = identifica_alvo_atingido(mapa, x_tiro, y_tiro);
+
+        switch(alvo_atingido){
+        case 'D':
+            afunda_destroyer(mapa,x_tiro,y_tiro);
+            break;
+        case 'C':
+            afunda_cruzador(mapa,x_tiro,y_tiro);
+            break;
+        case 'P':
+            afunda_porta_aviao(mapa,x_tiro,y_tiro);
+            break;
+        case 'H':
+            afunda_hidro_aviao(mapa,x_tiro,y_tiro);
+            break;
+        case 'B':
+            fim_de_jogo = TRUE;
+            break;
+        default:
+            break;
+        }
     }
+
+    return fim_de_jogo;
 }
 
+/* identifica_alvo_atingido - Imprime as coordenadas de um tiro e a mensagem correspondente ao
+efeito desse tiro; Retorna o tipo de embarcação atingido (conforme convenção do mapa). */
+/* Falta escrever no arquivo as mensagens de cada caso */
 char identifica_alvo_atingido(Mapa mapa, int x_tiro, int y_tiro) {
     char **M;
-    char alvo_atingido = M[x_tiro][y_tiro];
+    char alvo_atingido;
 
     M =  matriz(mapa);
+    alvo_atingido = M[x_tiro][y_tiro];
+
+    printf("Tiro em x = %d e y = %d!\n", x_tiro, y_tiro);
+
     /* Falta escrever no arquivo para cada caso! */
 
     switch (alvo_atingido){
     case 'D': /* Destroyer: */
-        afunda_destroyer(mapa, x_tiro, y_tiro);
         M[x_tiro][y_tiro] = '*';
-        printf("O tiro acertou uma embarcacao!\n");
+        printf("O tiro acertou um destroyer!\n");
         escreve_mapa_tela(mapa);
         escreve_mapa_arquivo(mapa);
         break;
     case 'C': /* Cruzador: */
-        afunda_cruzador(mapa, x_tiro, y_tiro);
         M[x_tiro][y_tiro] = '*';
-        printf("O tiro acertou uma embarcacao!\n");
+        printf("O tiro acertou um cruzador!\n");
         escreve_mapa_tela(mapa);
         escreve_mapa_arquivo(mapa);
         break;
     case 'P': /* Porta-avião: */
-        afunda_porta_aviao(mapa, x_tiro, y_tiro);
         M[x_tiro][y_tiro] = '*';
-        printf("O tiro acertou uma embarcacao!\n");
+        printf("O tiro acertou um porta-aviões!\n");
         escreve_mapa_tela(mapa);
         escreve_mapa_arquivo(mapa);
         break;
     case 'H': /* Hidro-avião: */
-        afunda_hidro_aviao(mapa, x_tiro, y_tiro);
         M[x_tiro][y_tiro] = '*';
-        printf("O tiro acertou uma embarcacao!\n");
+        printf("O tiro acertou um hidro-avião!\n");
         escreve_mapa_tela(mapa);
         escreve_mapa_arquivo(mapa);
         break;
     case 'S': /* Submarino: */
         M[x_tiro][y_tiro] = '*';
-        printf("O tiro acertou uma embarcacao!\n");
+        printf("O tiro acertou um submarino!\n");
         escreve_mapa_tela(mapa);
         escreve_mapa_arquivo(mapa);
         break;
@@ -272,4 +247,7 @@ char identifica_alvo_atingido(Mapa mapa, int x_tiro, int y_tiro) {
         escreve_mapa_arquivo(mapa);
         break;
     }
+
+    return alvo_atingido;
 }
+
