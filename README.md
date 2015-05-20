@@ -21,7 +21,7 @@ biblioteca que controla as embarcações e o processo de disparar os tiros
 5. sorteia - função que sorteia um numero de 0 a k, sendo k fornecido 
 6. coordenadas_tiro - função que sorteia o ponto a ser atinigido por um tiro usando a função sorteia para x de 0 a numero de colunas e y de 0 ao numero de linhas
 7. identifica_alvo_atingido - Imprime as coordenadas de um tiro e a mensagem correspondente ao efeito desse tiro; Retorna o tipo de embarcação atingido 
-8. dispara_tiros - Dispara 3 tiros, imprime as mensagens correspondentes aos efeitos dos tiros e atualiza a matriz
+8. dispara_tiros - Dispara 3 tiros, imprime na tela e no arquivo as mensagens correspondentes aos efeitos dos tiros e atualiza a matriz
 
 
 *libmapa*
@@ -48,6 +48,18 @@ biblioteca com funções uteis para as outras bibliotecas
 4. descarta_resto_linha - Recebe o ponteiro para um arquivo e avança seu buffer até uma quebra de linha.
 5. prox_elem - Recebe o ponteiro para um arquivo e avança seu buffer até o primeiro caracter que não seja whitespace, retornando ele em seguida.
 6. anexa_arquivo - Recebe o nome de um arquivo e uma string e a concatena ao final desse arquivo.
+
+*O jogo*
+
+além das bibliotecas citadas acima, temos o programa principal (main.c) e o arquivo de makefile que são necessários para a compilação e execução do programa.
+Nós fizemos a bilioteca de mapa separada com o intuito de quem utiliza-la não precisar saber como ela é implementada.A biblioteca de embarcações e a de tiros foram feita 
+assim como o enunciado do Exercício Programa indica.
+
+para rodar o jogo, faça o make e depois execute no terminal o main.
+
+partirmos do principio que o jogador não vá alterar as funções do jogo e sempre proverá um mapa novo , que concorde com as regras do enunciado, para o programa a cada nova execução.
+
+
 
 
 
