@@ -5,59 +5,82 @@
 #include "libmapa.h"
 #include "libbarco.h"
 
-void posiciona_barco(char **M){
-  char boolean=0;
-  int i,posicao;
-  while(boolean==0){
-    printf("digite a posição inicial do barco");
-    scanf("%d",&posicao);
-    if(M[0][posicao]=='.'){
-      M[0][posicao]='B';
-      boolean=1;
+#define FALSE 0
+#define TRUE  1
+
+void posiciona_barco(Mapa *mapa){
+    char posicionou = FALSE;
+    int i, posicao;
+    char ** M = matriz(mapa);
+
+    while(!posicionou){
+        printf("Digite a posição inicial do barco: ");
+        scanf("%d", &posicao);
+
+        if(M[0][posicao] == '.'){
+            M[0][posicao] = 'B';
+            posicionou = TRUE;
+        }
+        else
+            printf("Posição não disponível.");
     }
-    else
-      printf("posicao nao disponivel");
-  }
 }
 
-
-char rema_barco(char **M,int linhas,int colunas){
-  int i,j;
-  char movimento,moveu=0;
-  for(i=0 ; i<linhas ; i++){
-    for(j=0 ; j<colunas ; j++){
-      if(M[i][j]=='B'){
-	scanf("%c",&movimento);
-	if(movimento=='c'){
-	  if(M[i-1][j]!='S'||M[i-1][j]!='D'||M[i-1][j]!='C'||M[i-1][j]!='P'||M[i-1][j]!='H'){
-	    M[i-1][j]='B';
-	    M[i][j]='T';
-	    moveu=1;
-	  }
+void rema_barco(Mapa *mapa, int *x_B, int *y_B){
+    char ** M = matriz(mapa);
+    char movimento;
+    int x_barco,y_barco,moveu = FALSE;
+    x_barco = *x_B;
+    y_barco = *y_B;
+    scanf("%c",&movimento);
+    if(movimento == 'c' && y_barco > 0){
+	if(M[x_barco][y_barco - 1] != 'D' || \
+	   M[x_barco][y_barco - 1] != 'S' || \
+	   M[x_barco][y_barco - 1] != 'H' || \
+	   M[x_barco][y_barco - 1] != 'P' || \
+	   M[x_barco][y_barco - 1] != 'C' ){
+	    M[x_barco][y_barco] = 'T';
+	    M[x_barco][y_barco - 1] = 'B';
+	    moveu = TRUE;
+	    y_barco--;
 	}
-	if(movimento=='b'){
-	  if(M[i+1][j]!='S'||M[i+1][j]!='D'||M[i+1][j]!='C'||M[i+1][j]!='P'||M[i+1][j]!='H'){
-	    M[i+1][j]='B';
-	    M[i][j]='T';
-	    moveu=1;
-	  }
+    }    
+    if(movimento == 'b' && y_barco < linhas(mapa)){
+	if(M[x_barco][y_barco + 1] != 'D' || \
+	   M[x_barco][y_barco + 1] != 'S' || \
+	   M[x_barco][y_barco + 1] != 'H' || \
+	   M[x_barco][y_barco + 1] != 'P' || \
+	   M[x_barco][y_barco + 1] != 'C' ){
+	    M[x_barco][y_barco] = 'T';
+	    M[x_barco][y_barco + 1] = 'B';
+	    moveu = TRUE;
+	    y_barco++;
 	}
-	if(movimento=='e'){
-	  if(M[i][j-1]!='S'||M[i][j-1]!='D'||M[i][j-1]!='C'||M[i][j-1]!='P'||M[i][j-1]!='H'){
-	    M[i][j-1]='B';
-	    M[i][j]='T';
-	    moveu=1;
-	  }
+    }    
+    if(movimento == 'e' && x_barco > 0){
+	if(M[x_barco - 1][y_barco] != 'D' || \
+	   M[x_barco - 1][y_barco] != 'S' || \
+	   M[x_barco - 1][y_barco] != 'H' || \
+	   M[x_barco - 1][y_barco] != 'P' || \
+	   M[x_barco - 1][y_barco] != 'C' ){
+	    M[x_barco][y_barco] = 'T';
+	    M[x_barco - 1][y_barco] = 'B';
+	    moveu = TRUE;
+	    x_barco--;
 	}
-	if(movimento=='d'){
-	  if(M[i][j+1]!='S'||M[i][j+1]!='D'||M[i][j+1]!='C'||M[i][j+1]!='P'||M[i][j+1]!='H'){
-	    M[i][j+1]='B';
-	    M[i][j]='T';
-	    moveu=1;
-	  }
+    }    
+    if(movimento == 'd' && x_barco < colunas(mapa)){
+	if(M[x_barco + 1][y_barco] != 'D' || \
+	   M[x_barco + 1][y_barco] != 'S' || \
+	   M[x_barco + 1][y_barco] != 'H' || \
+	   M[x_barco + 1][y_barco] != 'P' || \
+	   M[x_barco + 1][y_barco] != 'C' ){
+	    M[x_barco][y_barco] = 'T';
+	    M[x_barco + 1][y_barco] = 'B';
+	    moveu = TRUE;
+	    x_barco++;
 	}
-      }
-    }
-  }
-  return moveu;
+    }    
+    *x_B = x_barco;
+    *y_B = y_barco;
 }

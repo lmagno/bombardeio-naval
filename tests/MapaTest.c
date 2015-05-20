@@ -3,7 +3,7 @@
 #include <string.h>
 #include "./cutest-1.5/CuTest.h"
 #include "../src/libmapa.h"
-#include "../src/libmatriz.h"
+#include "../src/libutils.h"
 
 void test_mapa1(CuTest *tc);
 void test_mapa2(CuTest *tc);
@@ -28,12 +28,12 @@ void test_mapa1(CuTest *tc) {
         n = 8;
 
     strcpy(path, "./mapas/mapa1.dat");
-    FILE *arq = fopen(path, "r");
-    CuAssertPtrNotNull(tc, arq);
 
-    mapa = leia_mapa_arq(arq);
+    i = leia_mapa_arquivo(&mapa, path);
+    CuAssertIntEquals(tc, 0, i);
     CuAssertPtrNotNull(tc, mapa);
     CuAssertIntEquals(tc, m, linhas(mapa));
+    printf("vuash\n");
     CuAssertIntEquals(tc, n, colunas(mapa));
 
     M = matriz(mapa);
@@ -52,7 +52,6 @@ void test_mapa1(CuTest *tc) {
 
     libera_mapa(mapa);
     libera_matriz(N, m);
-    fclose(arq);
 }
 
 void test_mapa2(CuTest *tc) {
@@ -64,10 +63,9 @@ void test_mapa2(CuTest *tc) {
         n = 13;
 
     strcpy(path, "./mapas/mapa2.dat");
-    FILE *arq = fopen(path, "r");
-    CuAssertPtrNotNull(tc, arq);
 
-    mapa = leia_mapa_arq(arq);
+    i = leia_mapa_arquivo(&mapa, path);
+    CuAssertIntEquals(tc, 0, i);
     CuAssertPtrNotNull(tc, mapa);
     CuAssertIntEquals(tc, m, linhas(mapa));
     CuAssertIntEquals(tc, n, colunas(mapa));
@@ -89,7 +87,6 @@ void test_mapa2(CuTest *tc) {
 
     libera_mapa(mapa);
     libera_matriz(N, m);
-    fclose(arq);
 }
 
 void test_mapa3(CuTest *tc) {
@@ -101,10 +98,9 @@ void test_mapa3(CuTest *tc) {
         n = 18;
 
     strcpy(path, "./mapas/mapa3.dat");
-    FILE *arq = fopen(path, "r");
-    CuAssertPtrNotNull(tc, arq);
 
-    mapa = leia_mapa_arq(arq);
+    i = leia_mapa_arquivo(&mapa, path);
+    CuAssertIntEquals(tc, 0, i);
     CuAssertPtrNotNull(tc, mapa);
     CuAssertIntEquals(tc, m, linhas(mapa));
     CuAssertIntEquals(tc, n, colunas(mapa));
@@ -134,7 +130,6 @@ void test_mapa3(CuTest *tc) {
 
     libera_mapa(mapa);
     libera_matriz(N, m);
-    fclose(arq);
 }
 
 void test_mapa4(CuTest *tc) {
@@ -146,10 +141,9 @@ void test_mapa4(CuTest *tc) {
         n = 15;
 
     strcpy(path, "./mapas/mapa4.dat");
-    FILE *arq = fopen(path, "r");
-    CuAssertPtrNotNull(tc, arq);
 
-    mapa = leia_mapa_arq(arq);
+    i = leia_mapa_arquivo(&mapa, path);
+    CuAssertIntEquals(tc, 0, i);
     CuAssertPtrNotNull(tc, mapa);
     CuAssertIntEquals(tc, m, linhas(mapa));
     CuAssertIntEquals(tc, n, colunas(mapa));
@@ -171,5 +165,4 @@ void test_mapa4(CuTest *tc) {
 
     libera_mapa(mapa);
     libera_matriz(N, m);
-    fclose(arq);
 }

@@ -1,7 +1,9 @@
 #ifndef libbarco_h__
 #define libbarco_h__
 
-void posiciona_barco(char **M);
-char rema_barco(char **M,int linhas,int colunas);
+void posiciona_barco(Mapa *mapa);
+
+void rema_barco(Mapa *mapa, int *x_B, int *y_b);
+
 
 #endif

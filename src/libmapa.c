@@ -15,13 +15,24 @@ struct MapaTag {
 };
 typedef struct MapaTag Mapa;
 
-// Recebe o ponteiro para um arquivo em que esteja especificado um mapa
-// mxn para o jogo e retorna um ponteiro para o Mapa lido.
-// Termina o programa com erro se o formato não estiver correto.
-Mapa* leia_mapa_arquivo(FILE *arq){
-    Mapa *mapa = (Mapa *)malloc(sizeof(Mapa));
+// Recebe:
+//     Mapa *mapa: ponteiro em que será gravado o mapa lido.
+//     char *nome: string com o nome de um arquivo que contém um mapa
+//                 no formato especificado.
+// Retorna:
+//     int 0: em caso de sucesso.
+//     int 1: caso não consiga abrir o arquivo
+//     int 2: caso o mapa esteja em formato errado.
+int leia_mapa_arquivo(Mapa **mapa, char *nome){
+    *mapa = malloc(sizeof(Mapa));
+    FILE *arq;
     char **M, c;
     int i, j, m, n;
+
+    arq = fopen(nome, "r");
+    if (arq == NULL) {
+        return 1;
+    }
 
     fscanf(arq, "%d", &m);
     fscanf(arq, "%d", &n);
@@ -40,41 +51,19 @@ Mapa* leia_mapa_arquivo(FILE *arq){
             c = prox_elem(arq);
         }
         if (j != n) {
-            printf("A linha %d tem %d elementos, equanto se esperava %d!\n", i+1, j, n);
-            exit(EXIT_FAILURE);
+            // Mensagens de erro ficam pro futuro
+            // printf("A linha %d tem %d elementos, equanto se esperava %d!\n", i+1, j, n);
+            return 2;
         }
 
         if (c == '|') descarta_resto_linha(arq);
     }
 
-
-    mapa->M = M;
-    mapa->m = m;
-    mapa->n = n;
-    return mapa;
-}
-
-// Pede que o usuário entre com o nome de um arquivo até que este seja aberto
-// com sucesso. Faz a leitura do mapa nele descrito e o retorna.
-Mapa* leia_mapa_prompt(){
-    FILE *arq;
-    char nome[50];
-    Mapa *mapa;
-
-    printf("Entre com o nome do arquivo que contém o mapa: ");
-    scanf("%s", nome);
-    arq = fopen(nome, "r");
-
-    while (arq == NULL) {
-        printf("Arquivo não encontrado, entre com o nome de um arquivo válido: ");
-        scanf("%s", nome);
-        arq = fopen(nome, "r");
-    }
-
-    mapa = leia_mapa_arquivo(arq);
-
+    (*mapa)->M = M;
+    (*mapa)->m = m;
+    (*mapa)->n = n;
     fclose(arq);
-    return mapa;
+    return 0;
 }
 
 // Recebe o ponteiro para um Mapa e imprime sua representação para a tela,
@@ -124,7 +113,7 @@ int escreva_mapa_arquivo(char *nome, Mapa *mapa){
         for(j = 0 ; j < n ; j++){
           fprintf(arq, "%c ", M[i][j]);
         }
-        printf("\n");
+        fprintf(arq,"\n");
     }
 
     fclose(arq);

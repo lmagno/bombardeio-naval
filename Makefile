@@ -1,9 +1,9 @@
 CC:=gcc
-CFLAGS:=
+CFLAGS:=-g
 MAIN:=main
 SRC:=./src/
 SOURCES:=$(SRC)$(MAIN).c
-LIBS:= barco mapa utils
+LIBS:= embarcacoes barco mapa utils
 DEPS:= $(LIBS:%=$(SRC)lib%.a) $(LIBS:%=$(SRC)lib%.h)
 LFLAGS:= $(LIBS:%=-l%)
 
