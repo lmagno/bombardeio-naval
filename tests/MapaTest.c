@@ -27,7 +27,7 @@ void test_mapa1(CuTest *tc) {
     int m = 5,
         n = 8;
 
-    strcpy(path, "./mapas/mapa1.dat");
+    strcpy(path, "./tests/mapa1.dat");
 
     i = leia_mapa_arquivo(&mapa, path);
     CuAssertIntEquals(tc, 0, i);
@@ -62,7 +62,7 @@ void test_mapa2(CuTest *tc) {
     int m = 6,
         n = 13;
 
-    strcpy(path, "./mapas/mapa2.dat");
+    strcpy(path, "./tests/mapa2.dat");
 
     i = leia_mapa_arquivo(&mapa, path);
     CuAssertIntEquals(tc, 0, i);
@@ -97,7 +97,7 @@ void test_mapa3(CuTest *tc) {
     int m = 14,
         n = 18;
 
-    strcpy(path, "./mapas/mapa3.dat");
+    strcpy(path, "./tests/mapa3.dat");
 
     i = leia_mapa_arquivo(&mapa, path);
     CuAssertIntEquals(tc, 0, i);
@@ -140,7 +140,7 @@ void test_mapa4(CuTest *tc) {
     int m = 6,
         n = 15;
 
-    strcpy(path, "./mapas/mapa4.dat");
+    strcpy(path, "./tests/mapa4.dat");
 
     i = leia_mapa_arquivo(&mapa, path);
     CuAssertIntEquals(tc, 0, i);
