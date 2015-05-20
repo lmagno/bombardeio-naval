@@ -61,5 +61,8 @@ partirmos do principio que o jogador não vá alterar as funções do jogo e sem
 
 
 
-
+**responsáveis**
+Lucas Magno - 7994983
+Fernando Freire Scattone - 8125021
+Gustavo Covas - 7995052
 
