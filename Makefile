@@ -1,5 +1,5 @@
 CC:=gcc
-CFLAGS:=
+CFLAGS:=-g
 MAIN:=main
 SRC:=./src/
 SOURCES:=$(SRC)$(MAIN).c
