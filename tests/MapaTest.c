@@ -9,6 +9,7 @@ void test_mapa1(CuTest *tc);
 void test_mapa2(CuTest *tc);
 void test_mapa3(CuTest *tc);
 void test_mapa4(CuTest *tc);
+char** str_vec(Mapa *mapa);
 
 CuSuite* test_mapa_get_suite() {
     CuSuite* suite = CuSuiteNew();
@@ -18,7 +19,6 @@ CuSuite* test_mapa_get_suite() {
     SUITE_ADD_TEST(suite, test_mapa4);
     return suite;
 }
-
 void test_mapa1(CuTest *tc) {
     Mapa *mapa;
     char **M, **N;
@@ -33,16 +33,9 @@ void test_mapa1(CuTest *tc) {
     CuAssertIntEquals(tc, 0, i);
     CuAssertPtrNotNull(tc, mapa);
     CuAssertIntEquals(tc, m, linhas(mapa));
-    printf("vuash\n");
     CuAssertIntEquals(tc, n, colunas(mapa));
 
-    M = matriz(mapa);
-    N = aloca_matriz(m, n + 1);
-
-    for (i = 0; i < m; i++){
-        strncpy(N[i], M[i], n);
-        N[i][n] = '\0';
-    }
+    N = str_vec(mapa);
 
     CuAssertStrEquals(tc, "CCCC.HBH", N[0]);
     CuAssertStrEquals(tc, "......H.", N[1]);
@@ -165,4 +158,19 @@ void test_mapa4(CuTest *tc) {
 
     libera_mapa(mapa);
     libera_matriz(N, m);
+}
+char** str_vec(Mapa *mapa) {
+    int i;
+    char **N, **M;
+    int m = linhas(mapa),
+        n = colunas(mapa);
+
+    M = matriz(mapa);
+    N = aloca_matriz(m, n + 1);
+    for (i = 0; i < m; i++){
+        strncpy(N[i], M[i], n);
+        N[i][n] = '\0';
+    }
+
+    return N;
 }

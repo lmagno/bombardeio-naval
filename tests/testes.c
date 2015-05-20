@@ -5,6 +5,7 @@
 
 CuSuite* test_utils_get_suite();
 CuSuite* test_mapa_get_suite();
+CuSuite* test_emb_get_suite();
 
 void RunAllTests(void) {
     CuString *output = CuStringNew();
@@ -12,6 +13,7 @@ void RunAllTests(void) {
 
     CuSuiteAddSuite(suite, test_utils_get_suite());
     CuSuiteAddSuite(suite, test_mapa_get_suite());
+    CuSuiteAddSuite(suite, test_emb_get_suite());
 
     CuSuiteRun(suite);
     CuSuiteSummary(suite, output);
