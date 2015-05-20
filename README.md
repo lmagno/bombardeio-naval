@@ -7,19 +7,19 @@ Projeto para a matéria MAC0211 - Laboratório de Programação 1
 
 biblioteca necessaria para o posicionamento inicial do barco no mapa e para o movimento do barco a cada rodada
 
-1. posiciona_barco - função que determina o local de inicio do barco
-2. rema_barco - função que movimenta o barco, quando possível, e retorna se o barco se movimentou ou não
+1. posiciona_barco - função pede uma coluna para ser a coluna inicial do barco, se não for um ponto válido ele pede novamente.
+2. rema_barco - função que movimenta o barco, quando possível, e retorna TRUE se o barco se movimentou ou FALSE se não.
 
 *libembarcações*
 
 biblioteca que controla as embarcações e o processo de disparar os tiros
 
-1. afunda_destroyer - função que afunda a embarcação destroyer
-2. afunda_porta_aviao - função que afunda a embarcação porta avião
-3. afunda_hidro_aviao - função que afunda a embarcação hidro avião
-4. afunda_cruzador - função que afunda a embarcação cruzador
+1. afunda_destroyer - função que muda na mapa a nave destroyer de atingida com um tiro para totalmente afundada
+2. afunda_porta_aviao - função que muda na mapa a nave porta avião de atingida com um tiro para totalmente afundada
+3. afunda_hidro_aviao - função que muda na mapa a nave hidro avião de atingida com um tiro para totalmente afundada
+4. afunda_cruzador - função que muda na mapa a nave cruzador de atingida com um tiro para totalmente afundada
 5. sorteia - função que sorteia um numero de 0 a k, sendo k fornecido 
-6. coordenadas_tiro - função que sorteia o ponto a ser atinigido por um tiro
+6. coordenadas_tiro - função que sorteia o ponto a ser atinigido por um tiro usando a função sorteia para x de 0 a numero de colunas e y de 0 ao numero de linhas
 7. identifica_alvo_atingido - Imprime as coordenadas de um tiro e a mensagem correspondente ao efeito desse tiro; Retorna o tipo de embarcação atingido 
 8. dispara_tiros - Dispara 3 tiros, imprime as mensagens correspondentes aos efeitos dos tiros e atualiza a matriz
 
