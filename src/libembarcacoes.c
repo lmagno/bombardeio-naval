@@ -17,9 +17,9 @@ void afunda_destroyer(Mapa *mapa, int x, int y, int d){
     char **M;
     M = matriz(mapa);
 
-    if(M[x][y] == 'D' || d == 0){
+    if(M[y][x] == 'D' || d == 0){
 
-        M[x][y] = '*';
+        M[y][x] = '*';
 
         if(x > 0)
             i = x - 1;
@@ -30,8 +30,8 @@ void afunda_destroyer(Mapa *mapa, int x, int y, int d){
         else
             j = 0;
 
-        for(; i <= x + 1 || i < linhas(mapa); i++)
-            for(; j <= y + 1 || j < colunas(mapa); j++)
+        for(; i <= y + 1 || i < linhas(mapa); i++)
+            for(; j <= x + 1 || j < colunas(mapa); j++)
                 if(M[i][j] == 'D')
                     afunda_destroyer(mapa,i,j,d+1);
     }
@@ -42,9 +42,9 @@ void afunda_cruzador(Mapa *mapa, int x, int y, int d){
     char **M;
     M = matriz(mapa);
 
-    if(M[x][y] == 'C' || d == 0){
+    if(M[y][x] == 'C' || d == 0){
 
-        M[x][y] = '*';
+        M[y][x] = '*';
 
         if(x > 0)
             i = x - 1;
@@ -55,8 +55,8 @@ void afunda_cruzador(Mapa *mapa, int x, int y, int d){
         else
             j = 0;
 
-        for(; i <= x + 1 || i < linhas(mapa); i++)
-            for(; j <= y + 1 || j < colunas(mapa); j++)
+        for(; i <= y + 1 || i < linhas(mapa); i++)
+            for(; j <= x + 1 || j < colunas(mapa); j++)
                 if(M[i][j] == 'C')
                     afunda_cruzador(mapa,i,j,d+1);
     }
@@ -67,9 +67,9 @@ void afunda_porta_aviao(Mapa *mapa, int x, int y, int d){
     char **M;
     M = matriz(mapa);
 
-    if(M[x][y] == 'P' || d == 0){
+    if(M[y][x] == 'P' || d == 0){
 
-        M[x][y] = '*';
+        M[y][x] = '*';
 
         if(x > 0)
             i = x - 1;
@@ -80,8 +80,8 @@ void afunda_porta_aviao(Mapa *mapa, int x, int y, int d){
         else
             j = 0;
 
-        for(; i <= x + 1 || i < linhas(mapa); i++)
-            for(; j <= y + 1 || j < colunas(mapa); j++)
+        for(; i <= y + 1 || i < linhas(mapa); i++)
+            for(; j <= x + 1 || j < colunas(mapa); j++)
                 if(M[i][j] == 'P')
                     afunda_porta_aviao(mapa,i,j,d+1);
     }
@@ -92,9 +92,9 @@ void afunda_hidro_aviao(Mapa *mapa, int x, int y, int d){
     char **M;
     M = matriz(mapa);
 
-    if(M[x][y] == 'H' || d == 0){
+    if(M[y][x] == 'H' || d == 0){
 
-        M[x][y] = '*';
+        M[y][x] = '*';
 
         if(x > 0)
             i = x - 1;
@@ -105,8 +105,8 @@ void afunda_hidro_aviao(Mapa *mapa, int x, int y, int d){
         else
             j = 0;
 
-        for(; i <= x + 1 || i < linhas(mapa); i++)
-            for(; j <= y + 1 || j < colunas(mapa); j++)
+        for(; i <= y + 1 || i < linhas(mapa); i++)
+            for(; j <= x + 1 || j < colunas(mapa); j++)
                 if(M[i][j] == 'H')
                     afunda_hidro_aviao(mapa,i,j,d+1);
     }
@@ -136,48 +136,48 @@ char identifica_alvo_atingido(Mapa *mapa, int x_tiro, int y_tiro, char* arquivo)
     char alvo_atingido;
 
     M =  matriz(mapa);
-    alvo_atingido = M[x_tiro][y_tiro];
+    alvo_atingido = M[y_tiro][x_tiro];
 
     printf("Tiro em x = %d e y = %d!\n", x_tiro, y_tiro);
 
     switch (alvo_atingido){
     case 'D': /* Destroyer: */
-        M[x_tiro][y_tiro] = '*';
+        M[y_tiro][x_tiro] = '*';
         printf("O tiro acertou um destroyer!\n");
         anexa_arquivo(arquivo,"O tiro acertou um destroyer!\n");
         break;
     case 'C': /* Cruzador: */
-        M[x_tiro][y_tiro] = '*';
+        M[y_tiro][x_tiro] = '*';
         printf("O tiro acertou um cruzador!\n");
         anexa_arquivo(arquivo,"O tiro acertou um cruzador!\n");
         break;
     case 'P': /* Porta-avião: */
-        M[x_tiro][y_tiro] = '*';
+        M[y_tiro][x_tiro] = '*';
         printf("O tiro acertou um porta-aviões!\n");
         anexa_arquivo(arquivo,"O tiro acertou um porta-aviões!\n");
         break;
     case 'H': /* Hidro-avião: */
-        M[x_tiro][y_tiro] = '*';
+        M[y_tiro][x_tiro] = '*';
         printf("O tiro acertou um hidro-avião!\n");
         anexa_arquivo(arquivo,"O tiro acertou um hidro-avião!\n");
         break;
     case 'S': /* Submarino: */
-        M[x_tiro][y_tiro] = '*';
+        M[y_tiro][x_tiro] = '*';
         printf("O tiro acertou um submarino!\n");
         anexa_arquivo(arquivo,"O tiro acertou um submarino!\n");
         break;
     case 'B': /* Barco: */
-        M[x_tiro][y_tiro] = '!';
+        M[y_tiro][x_tiro] = '!';
         printf("O tiro acertou seu barco!\n");
         anexa_arquivo(arquivo,"O tiro acertou seu barco!\n");
         break;
     case 'T':
-        M[x_tiro][y_tiro] = '+';
+        M[y_tiro][x_tiro] = '+';
         printf("O tiro acertou parte do caminho percorrido por seu barco!\n");
         anexa_arquivo(arquivo,"O tiro acertou parte do caminho percorrido por seu barco!\n");
         break;
     default:
-        M[x_tiro][y_tiro] = '=';
+        M[y_tiro][x_tiro] = '=';
         printf("O tiro acertou a água!\n");
         anexa_arquivo(arquivo,"O tiro acertou a água!\n");
         break;
