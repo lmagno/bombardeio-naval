@@ -112,7 +112,7 @@ void afunda_hidro_aviao(Mapa *mapa, int x, int y, int d){
     }
 }
 
-/* sorteia - Retorna um valor aleatório no intervalo 1...k */
+/* sorteia - Retorna um valor aleatório no intervalo 0...k-1 */
 int sorteia(int k){
     int r;
     r = rand() % k;
