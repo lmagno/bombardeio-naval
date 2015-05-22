@@ -13,7 +13,7 @@
 
 /* d: distância do tiro em relação à casa a ser afetada pela função */
 void afunda_destroyer(Mapa *mapa, int x, int y, int d){
-    int i, j;
+    int i, j,i_in,j_in;
     char **M;
     M = matriz(mapa);
 
@@ -22,23 +22,23 @@ void afunda_destroyer(Mapa *mapa, int x, int y, int d){
         M[y][x] = '*';
 
         if(x > 0)
-            i = x - 1;
+            i_in = x - 1;
         else
-            i = 0;
+            i_in = 0;
         if(y > 0)
-            j = y - 1;
+            j_in = y - 1;
         else
-            j = 0;
+            j_in = 0;
 
-        for(; i <= y + 1 || i < linhas(mapa); i++)
-            for(; j <= x + 1 || j < colunas(mapa); j++)
+        for(i = i_in; i <= y + 1 || i < linhas(mapa); i++)
+            for(j = j_in; j <= x + 1 || j < colunas(mapa); j++)
                 if(M[i][j] == 'D')
                     afunda_destroyer(mapa,i,j,d+1);
     }
 }
 
 void afunda_cruzador(Mapa *mapa, int x, int y, int d){
-    int i, j;
+    int i, j,i_in,j_in;
     char **M;
     M = matriz(mapa);
 
@@ -47,23 +47,23 @@ void afunda_cruzador(Mapa *mapa, int x, int y, int d){
         M[y][x] = '*';
 
         if(x > 0)
-            i = x - 1;
+            i_in = x - 1;
         else
-            i = 0;
+            i_in = 0;
         if(y > 0)
-            j = y - 1;
+            j_in = y - 1;
         else
-            j = 0;
+            j_in = 0;
 
-        for(; i <= y + 1 || i < linhas(mapa); i++)
-            for(; j <= x + 1 || j < colunas(mapa); j++)
+        for(i = i_in; i <= y + 1 || i < linhas(mapa); i++)
+            for(j = j_in; j <= x + 1 || j < colunas(mapa); j++)
                 if(M[i][j] == 'C')
                     afunda_cruzador(mapa,i,j,d+1);
     }
 }
 
 void afunda_porta_aviao(Mapa *mapa, int x, int y, int d){
-    int i, j;
+    int i, j,i_in,j_in;
     char **M;
     M = matriz(mapa);
 
@@ -72,23 +72,23 @@ void afunda_porta_aviao(Mapa *mapa, int x, int y, int d){
         M[y][x] = '*';
 
         if(x > 0)
-            i = x - 1;
+            i_in = x - 1;
         else
-            i = 0;
+            i_in = 0;
         if(y > 0)
-            j = y - 1;
+            j_in = y - 1;
         else
-            j = 0;
+            j_in = 0;
 
-        for(; i <= y + 1 || i < linhas(mapa); i++)
-            for(; j <= x + 1 || j < colunas(mapa); j++)
+        for(i=i_in; i <= y + 1 || i < linhas(mapa); i++)
+            for(j=j_in; j <= x + 1 || j < colunas(mapa); j++)
                 if(M[i][j] == 'P')
                     afunda_porta_aviao(mapa,i,j,d+1);
     }
 }
 
 void afunda_hidro_aviao(Mapa *mapa, int x, int y, int d){
-    int i, j;
+    int i, j,i_in,j_in;
     char **M;
     M = matriz(mapa);
 
@@ -97,16 +97,16 @@ void afunda_hidro_aviao(Mapa *mapa, int x, int y, int d){
         M[y][x] = '*';
 
         if(x > 0)
-            i = x - 1;
+            i_in = x - 1;
         else
-            i = 0;
+            i_in = 0;
         if(y > 0)
-            j = y - 1;
+            j_in = y - 1;
         else
-            j = 0;
+            j_in = 0;
 
-        for(; i <= y + 1 || i < linhas(mapa); i++)
-            for(; j <= x + 1 || j < colunas(mapa); j++)
+        for(i = i_in; i <= y + 1 || i < linhas(mapa); i++)
+            for(j = j_in; j <= x + 1 || j < colunas(mapa); j++)
                 if(M[i][j] == 'H')
                     afunda_hidro_aviao(mapa,i,j,d+1);
     }
