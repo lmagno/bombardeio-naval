@@ -50,7 +50,7 @@ void test_afunda_hidro_aviao2(CuTest *tc) {
 
     mapa = get_mapa(tc, 3);
     CuAssert(tc, "Não tem nenhum hidro-avião pra afundar nesta casa!", matriz(mapa)[1][13] == 'H');
-    afunda_destroyer(mapa, 13, 1, 0);
+    afunda_hidro_aviao(mapa, 13, 1, 0);
 
     N = str_vec(mapa);
     CuAssertStrEquals(tc, "..........H..*...P", N[1]);
@@ -65,7 +65,7 @@ void test_afunda_hidro_aviao1(CuTest *tc) {
 
     mapa = get_mapa(tc, 3);
     CuAssert(tc, "Não tem nenhum hidro-avião pra afundar nesta casa!", matriz(mapa)[4][0] == 'H');
-    afunda_destroyer(mapa, 0, 4, 0);
+    afunda_hidro_aviao(mapa, 0, 4, 0);
 
     N = str_vec(mapa);
     CuAssertStrEquals(tc, "*..P..C...D..D.S.P", N[4]);
@@ -81,7 +81,7 @@ void test_afunda_porta_aviao4(CuTest *tc) {
 
     mapa = get_mapa(tc, 3);
     CuAssert(tc, "Não tem nenhum porta-avião pra afundar nesta casa!", matriz(mapa)[5][17] == 'P');
-    afunda_destroyer(mapa, 17, 5, 0);
+    afunda_porta_aviao(mapa, 17, 5, 0);
 
     N = str_vec(mapa);
     CuAssertStrEquals(tc, "..........H..H...*", N[1]);
@@ -101,7 +101,7 @@ void test_afunda_porta_aviao3(CuTest *tc) {
 
     mapa = get_mapa(tc, 3);
     CuAssert(tc, "Não tem nenhum porta-avião pra afundar nesta casa!", matriz(mapa)[1][17] == 'P');
-    afunda_destroyer(mapa, 17, 1, 0);
+    afunda_porta_aviao(mapa, 17, 1, 0);
 
     N = str_vec(mapa);
 
@@ -123,7 +123,7 @@ void test_afunda_porta_aviao2(CuTest *tc) {
 
     mapa = get_mapa(tc, 3);
     CuAssert(tc, "Não tem nenhum porta-avião pra afundar nesta casa!", matriz(mapa)[6][5] == 'P');
-    afunda_destroyer(mapa, 5, 6, 0);
+    afunda_porta_aviao(mapa, 5, 6, 0);
 
     N = str_vec(mapa);
     CuAssertStrEquals(tc, ".*.....DD.....H..P", N[2]);
@@ -143,7 +143,7 @@ void test_afunda_porta_aviao1(CuTest *tc) {
 
     mapa = get_mapa(tc, 3);
     CuAssert(tc, "Não tem nenhum porta-avião pra afundar nesta casa!", matriz(mapa)[2][1] == 'P');
-    afunda_destroyer(mapa, 1, 2, 0);
+    afunda_porta_aviao(mapa, 1, 2, 0);
 
     N = str_vec(mapa);
     CuAssertStrEquals(tc, ".*.....DD.....H..P", N[2]);
@@ -163,7 +163,7 @@ void test_afunda_cruzador4(CuTest *tc) {
 
     mapa = get_mapa(tc, 3);
     CuAssert(tc, "Não tem nenhum cruzador pra afundar nesta casa!", matriz(mapa)[6][15] == 'C');
-    afunda_destroyer(mapa, 15, 6, 0);
+    afunda_cruzador(mapa, 15, 6, 0);
 
     N = str_vec(mapa);
     CuAssertStrEquals(tc, "H....P..C...****..", N[6]);
@@ -178,7 +178,7 @@ void test_afunda_cruzador3(CuTest *tc) {
 
     mapa = get_mapa(tc, 3);
     CuAssert(tc, "Não tem nenhum cruzador pra afundar nesta casa!", matriz(mapa)[6][12] == 'C');
-    afunda_destroyer(mapa, 12, 6, 0);
+    afunda_cruzador(mapa, 12, 6, 0);
 
     N = str_vec(mapa);
     CuAssertStrEquals(tc, "H....P..C...****..", N[6]);
@@ -193,7 +193,7 @@ void test_afunda_cruzador2(CuTest *tc) {
 
     mapa = get_mapa(tc, 3);
     CuAssert(tc, "Não tem nenhum cruzador pra afundar nesta casa!", matriz(mapa)[6][8] == 'C');
-    afunda_destroyer(mapa, 8, 6, 0);
+    afunda_cruzador(mapa, 8, 6, 0);
 
     N = str_vec(mapa);
     CuAssertStrEquals(tc, "..P..*......D....P", N[3]);
@@ -211,7 +211,7 @@ void test_afunda_cruzador1(CuTest *tc) {
 
     mapa = get_mapa(tc, 3);
     CuAssert(tc, "Não tem nenhum cruzador pra afundar nesta casa!", matriz(mapa)[4][6] == 'C');
-    afunda_destroyer(mapa, 6, 4, 0);
+    afunda_cruzador(mapa, 6, 4, 0);
 
     N = str_vec(mapa);
     CuAssertStrEquals(tc, "..P..*......D....P", N[3]);
