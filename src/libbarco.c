@@ -8,17 +8,27 @@
 #define FALSE 0
 #define TRUE  1
 
-void posiciona_barco(Mapa *mapa){
+void posiciona_barco(Mapa *mapa, int *x, int *y){
     char posicionou = FALSE;
-    int i, posicao;
+    int i, j, posicao, err;
     char ** M = matriz(mapa);
 
+    printf("Posições disponíveis: ");
+    for (j = 0; j < colunas(mapa); j++)
+        if (M[0][j] == '.')
+            printf("%d ", j);
+
+    printf("\n");
     while(!posicionou){
-        printf("Digite a posição inicial do barco: ");
-        scanf("%d", &posicao);
+        printf("Digite a posição inicial do barco: \n");
+        while(err = read_int(&posicao)) {
+            printf("err = %d\n", err);
+        }
 
         if(M[0][posicao] == '.'){
             M[0][posicao] = 'B';
+            *x = posicao;
+            *y = 0;
             posicionou = TRUE;
         }
         else
@@ -29,58 +39,71 @@ void posiciona_barco(Mapa *mapa){
 void rema_barco(Mapa *mapa, int *x_B, int *y_B){
     char ** M = matriz(mapa);
     char movimento;
-    int x_barco,y_barco,moveu = FALSE;
-    x_barco = *x_B;
-    y_barco = *y_B;
-    scanf("%c",&movimento);
-    if(movimento == 'c' && y_barco > 0){
-	if(M[x_barco][y_barco - 1] != 'D' || \
-	   M[x_barco][y_barco - 1] != 'S' || \
-	   M[x_barco][y_barco - 1] != 'H' || \
-	   M[x_barco][y_barco - 1] != 'P' || \
-	   M[x_barco][y_barco - 1] != 'C' ){
-	    M[x_barco][y_barco] = 'T';
-	    M[x_barco][y_barco - 1] = 'B';
-	    moveu = TRUE;
-	    y_barco--;
-	}
-    }    
-    if(movimento == 'b' && y_barco < linhas(mapa)){
-	if(M[x_barco][y_barco + 1] != 'D' || \
-	   M[x_barco][y_barco + 1] != 'S' || \
-	   M[x_barco][y_barco + 1] != 'H' || \
-	   M[x_barco][y_barco + 1] != 'P' || \
-	   M[x_barco][y_barco + 1] != 'C' ){
-	    M[x_barco][y_barco] = 'T';
-	    M[x_barco][y_barco + 1] = 'B';
-	    moveu = TRUE;
-	    y_barco++;
-	}
-    }    
-    if(movimento == 'e' && x_barco > 0){
-	if(M[x_barco - 1][y_barco] != 'D' || \
-	   M[x_barco - 1][y_barco] != 'S' || \
-	   M[x_barco - 1][y_barco] != 'H' || \
-	   M[x_barco - 1][y_barco] != 'P' || \
-	   M[x_barco - 1][y_barco] != 'C' ){
-	    M[x_barco][y_barco] = 'T';
-	    M[x_barco - 1][y_barco] = 'B';
-	    moveu = TRUE;
-	    x_barco--;
-	}
-    }    
-    if(movimento == 'd' && x_barco < colunas(mapa)){
-	if(M[x_barco + 1][y_barco] != 'D' || \
-	   M[x_barco + 1][y_barco] != 'S' || \
-	   M[x_barco + 1][y_barco] != 'H' || \
-	   M[x_barco + 1][y_barco] != 'P' || \
-	   M[x_barco + 1][y_barco] != 'C' ){
-	    M[x_barco][y_barco] = 'T';
-	    M[x_barco + 1][y_barco] = 'B';
-	    moveu = TRUE;
-	    x_barco++;
-	}
-    }    
-    *x_B = x_barco;
-    *y_B = y_barco;
+    int i, j,
+        dx, dy,
+        moveu, escolheu;
+
+
+    printf("Entre com um movimento para o barco: ");
+    read_char(&movimento);
+
+    moveu = FALSE;
+    while(!moveu){
+
+        escolheu = FALSE;
+        while(!escolheu){
+            switch(movimento) {
+                case 'c':
+                    dx =  0;
+                    dy = -1;
+                    escolheu = TRUE;
+                    break;
+
+                case 'b':
+                    dx = 0;
+                    dy = 1;
+                    escolheu = TRUE;
+                    break;
+
+                case 'e':
+                    dx = -1;
+                    dy =  0;
+                    escolheu = TRUE;
+                    break;
+
+                case 'd':
+                    dx = 1;
+                    dy = 0;
+                    escolheu = TRUE;
+                    break;
+
+                default:
+                    printf("Movimento não reconhecido.\n");
+                    printf("Entre com um dos seguintes: (c)ima, (b)aixo, (e)squerda, (d)ireita: ");
+                    read_char(&movimento);
+                    break;
+            }
+        }
+
+        j = *x_B + dx;
+        i = *y_B + dy;
+
+        printf("%d %d\n", i, j);
+        if(i >= 0 && i <  linhas(mapa) &&
+           j >= 0 && j < colunas(mapa) &&
+           M[i][j] != 'D' && M[i][j] != 'C' &&
+           M[i][j] != 'P' && M[i][j] != 'H') {
+
+            M[i][j] = 'B';
+            M[*y_B][*x_B] = 'T';
+            moveu = TRUE;
+        } else {
+            printf("Esse movimento não é possível!\n");
+            printf("Entre com outro movimento para o barco: \n");
+            read_char(&movimento);
+        }
+    }
+
+    *x_B = j;
+    *y_B = i;
 }

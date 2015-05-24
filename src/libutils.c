@@ -75,3 +75,109 @@ int anexa_arquivo(char *nome, char *str) {
     fclose(arq);
     return 0;
 }
+
+// Lê um caracter da entrada padrão
+// Recebe:
+//     char *c: ponteiro para o caracter onde será gravado o caracter
+//              lido da entrada
+// Retorna:
+//      0: em caso de sucesso
+//     -1: caso não tenha sido possível ler da stdin
+//      1: caso o número errado de caracteres tenha sido fornecido (0 ou mais
+//         de 1)
+int read_char(char *c) {
+    char *line, c1, c2;
+    size_t len;
+    ssize_t read;
+
+    len = 256;
+    line = malloc(len*sizeof(char));
+
+    if (getline(&line, &len, stdin) != -1){
+        read = sscanf(line, " %c %c", &c1, &c2);
+        switch(read) {
+            case 1:
+                *c = c1;
+                free(line);
+                return 0;
+            default:
+                free(line);
+                return 1;
+        }
+    }
+    else {
+        free(line);
+        return -1;
+    }
+}
+
+// Lê um inteiro da entrada padrão
+// Recebe:
+//     int *c: ponteiro para o caracter onde será gravado o caracter
+//              lido da entrada
+// Retorna:
+//      0: em caso de sucesso
+//     -1: caso não tenha sido possível ler da stdin
+//      1: caso o número errado de números tenha sido fornecido (0 ou mais
+//         de 1)
+int read_int(int *d) {
+    char *line;
+    int d1, d2;
+    size_t len;
+    ssize_t read;
+
+    len = 256;
+    line = malloc(len*sizeof(char));
+
+    if (getline(&line, &len, stdin) != -1){
+        read = sscanf(line, " %d %d", &d1, &d2);
+        switch(read) {
+            case 1:
+                *d = d1;
+                free(line);
+                return 0;
+            default:
+                free(line);
+                return 1;
+        }
+    }
+    else {
+        free(line);
+        return -1;
+    }
+}
+
+// Lê uma string da entrada padrão
+// Recebe:
+//     int *s: string onde será gravado o caracter lido da entrada
+// Retorna:
+//      0: em caso de sucesso
+//     -1: caso não tenha sido possível ler da stdin
+//      1: caso o número errado de strings tenha sido fornecido (0 ou mais
+//         de 1)
+int read_str(char *s) {
+    char *line;
+    char s1[256], c2;
+    size_t len;
+    ssize_t read;
+
+    len = 256;
+    line = malloc(len*sizeof(char));
+
+    if (getline(&line, &len, stdin) != -1){
+        read = sscanf(line, " %s %c", s1, &c2);
+        switch(read) {
+            case 1:
+                strcpy(s, s1);
+                free(line);
+                return 0;
+            default:
+                free(line);
+                return 1;
+        }
+    }
+    else {
+        free(line);
+        return -1;
+    }
+}

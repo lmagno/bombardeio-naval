@@ -16,16 +16,16 @@ int main() {
     int err = FALSE;
 
     printf("Entre com o nome do arquivo que contém o mapa: ");
-    scanf("%s", arquivo);
+    read_str(arquivo);
 
     err = leia_mapa_arquivo(&mapa, arquivo);
 
     while(err){
         printf("Arquivo inválido. Insira o nome de um arquivo válido: ");
-        scanf("%s", arquivo);
+        read_str(arquivo);
     }
 
-    posiciona_barco(mapa);
+    posiciona_barco(mapa, &x_barco, &y_barco);
 
     escreva_mapa_tela(mapa);
     escreva_mapa_arquivo(arquivo,mapa);
