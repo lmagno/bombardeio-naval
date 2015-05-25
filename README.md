@@ -1,3 +1,16 @@
+# TO-DO
+
+Em ordem de importância
+- [ ] Colocar as condições de término do jogo (chegar ao final da linha e ficar três jogadas seguidas num beco, sejá lá o que isso signifique)
+- [ ] Fazer um menu pro jogo
+- [ ] Tratar os erros de forma mais decente, usando structs ou enum
+- [ ] Fazer a documentação (pra usuário e pra desenvolvedor)
+- [ ] Deixar o jogo bonitinho pelo menos
+- [ ] Mudar o Makefile para usar bibliotecas dinâmicas
+- [ ] Mais testes!
+- [ ] Usar uma struct para representar pontos (x, y)
+
+
 # bombardeio-naval
 Projeto para a matéria MAC0211 - Laboratório de Programação 1
 
@@ -18,9 +31,9 @@ biblioteca que controla as embarcações e o processo de disparar os tiros
 2. afunda_porta_aviao - função que muda na mapa a nave porta avião de atingida com um tiro para totalmente afundada
 3. afunda_hidro_aviao - função que muda na mapa a nave hidro avião de atingida com um tiro para totalmente afundada
 4. afunda_cruzador - função que muda na mapa a nave cruzador de atingida com um tiro para totalmente afundada
-5. sorteia - função que sorteia um numero de 0 a k, sendo k fornecido 
+5. sorteia - função que sorteia um numero de 0 a k, sendo k fornecido
 6. coordenadas_tiro - função que sorteia o ponto a ser atinigido por um tiro usando a função sorteia para x de 0 a numero de colunas e y de 0 ao numero de linhas
-7. identifica_alvo_atingido - Imprime as coordenadas de um tiro e a mensagem correspondente ao efeito desse tiro; Retorna o tipo de embarcação atingido 
+7. identifica_alvo_atingido - Imprime as coordenadas de um tiro e a mensagem correspondente ao efeito desse tiro; Retorna o tipo de embarcação atingido
 8. dispara_tiros - Dispara 3 tiros, imprime na tela e no arquivo as mensagens correspondentes aos efeitos dos tiros e atualiza a matriz
 
 
@@ -52,7 +65,7 @@ biblioteca com funções uteis para as outras bibliotecas
 *O jogo*
 
 além das bibliotecas citadas acima, temos o programa principal (main.c) e o arquivo de makefile que são necessários para a compilação e execução do programa.
-Nós fizemos a bilioteca de mapa separada com o intuito de quem utiliza-la não precisar saber como ela é implementada.A biblioteca de embarcações e a de tiros foram feita 
+Nós fizemos a bilioteca de mapa separada com o intuito de quem utiliza-la não precisar saber como ela é implementada.A biblioteca de embarcações e a de tiros foram feita
 assim como o enunciado do Exercício Programa indica.
 
 para rodar o jogo, faça o make e depois execute no terminal o main.
@@ -65,4 +78,3 @@ partirmos do principio que o jogador não vá alterar as funções do jogo e sem
 Lucas Magno - 7994983
 Fernando Freire Scattone - 8125021
 Gustavo Covas - 7995052
-
