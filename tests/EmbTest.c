@@ -2,8 +2,6 @@
 #include <stdlib.h>
 #include <string.h>
 #include "./cutest-1.5/CuTest.h"
-#include "../src/libmapa.h"
-#include "../src/libutils.h"
 #include "../src/libembarcacoes.h"
 
 void test_afunda_destroyer1(CuTest *tc);
@@ -294,11 +292,11 @@ void test_sorteia(CuTest *tc) {
 
 Mapa* get_mapa(CuTest *tc, int i) {
     Mapa *mapa;
-    int err;
+    Status *sts;
     char nome[50];
 
     sprintf(nome, "./tests/mapa%1d.dat", i);
-    err = leia_mapa_arquivo(&mapa, nome);
-    CuAssertIntEquals(tc, 0, err);
+    sts = leia_mapa_arquivo(&mapa, nome);
+    CuAssertIntEquals(tc, 0, trata_status(sts));
     return mapa;
 }

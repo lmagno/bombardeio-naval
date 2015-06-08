@@ -21,16 +21,16 @@ CuSuite* test_mapa_get_suite() {
 }
 void test_mapa1(CuTest *tc) {
     Mapa *mapa;
-    char **M, **N;
+    char **N;
     char path[50];
-    int i;
+    Status *sts;
     int m = 5,
         n = 8;
 
     strcpy(path, "./tests/mapa1.dat");
 
-    i = leia_mapa_arquivo(&mapa, path);
-    CuAssertIntEquals(tc, 0, i);
+    sts = leia_mapa_arquivo(&mapa, path);
+    CuAssertIntEquals(tc, 0, trata_status(sts));
     CuAssertPtrNotNull(tc, mapa);
     CuAssertIntEquals(tc, m, linhas(mapa));
     CuAssertIntEquals(tc, n, colunas(mapa));
@@ -51,14 +51,15 @@ void test_mapa2(CuTest *tc) {
     Mapa *mapa;
     char **M, **N;
     char path[50];
+    Status *sts;
     int i;
     int m = 6,
         n = 13;
 
     strcpy(path, "./tests/mapa2.dat");
 
-    i = leia_mapa_arquivo(&mapa, path);
-    CuAssertIntEquals(tc, 0, i);
+    sts = leia_mapa_arquivo(&mapa, path);
+    CuAssertIntEquals(tc, 0, trata_status(sts));
     CuAssertPtrNotNull(tc, mapa);
     CuAssertIntEquals(tc, m, linhas(mapa));
     CuAssertIntEquals(tc, n, colunas(mapa));
@@ -86,14 +87,15 @@ void test_mapa3(CuTest *tc) {
     Mapa *mapa;
     char **M, **N;
     char path[50];
+    Status *sts;
     int i;
     int m = 14,
         n = 18;
 
     strcpy(path, "./tests/mapa3.dat");
 
-    i = leia_mapa_arquivo(&mapa, path);
-    CuAssertIntEquals(tc, 0, i);
+    sts = leia_mapa_arquivo(&mapa, path);
+    CuAssertIntEquals(tc, 0, trata_status(sts));
     CuAssertPtrNotNull(tc, mapa);
     CuAssertIntEquals(tc, m, linhas(mapa));
     CuAssertIntEquals(tc, n, colunas(mapa));
@@ -129,14 +131,15 @@ void test_mapa4(CuTest *tc) {
     Mapa *mapa;
     char **M, **N;
     char path[50];
+    Status *sts;
     int i;
     int m = 6,
         n = 15;
 
     strcpy(path, "./tests/mapa4.dat");
 
-    i = leia_mapa_arquivo(&mapa, path);
-    CuAssertIntEquals(tc, 0, i);
+    sts = leia_mapa_arquivo(&mapa, path);
+    CuAssertIntEquals(tc, 0, trata_status(sts));
     CuAssertPtrNotNull(tc, mapa);
     CuAssertIntEquals(tc, m, linhas(mapa));
     CuAssertIntEquals(tc, n, colunas(mapa));
