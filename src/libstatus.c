@@ -53,11 +53,6 @@ Status* erro(int valor, char *mensagem) {
     return sts;
 }
 
-// Libera um Status previamente alocado.
-void libera_status(Status *sts) {
-    free(sts->mensagem);
-    free(sts);
-}
 
 // Trata o Status retornado por alguma função, isto é,
 // imprime a mensagem de erro caso valor != 0 (erro).
@@ -76,6 +71,6 @@ int trata_status(Status *sts) {
         fprintf(stderr, "%s\n", mensagem);
     }
 
-    libera_status(sts);
+    free(sts);
     return valor;
 }
