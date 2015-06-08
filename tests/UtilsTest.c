@@ -20,7 +20,7 @@ void test_aloca_matriz_1x1(CuTest *tc) {
     char **M = aloca_matriz(m, n);
     CuAssertPtrNotNull(tc, M);
 
-    free(M);
+    libera_matriz(M, m);
 }
 
 void test_aloca_matriz_1000x1000(CuTest *tc) {
@@ -30,5 +30,5 @@ void test_aloca_matriz_1000x1000(CuTest *tc) {
     char **M = aloca_matriz(m, n);
     CuAssertPtrNotNull(tc, M);
 
-    free(M);
+    libera_matriz(M, m);
 }
