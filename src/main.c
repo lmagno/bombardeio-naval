@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include "libstatus.h"
 #include "libutils.h"
 #include "libmapa.h"
 #include "libembarcacoes.h"
@@ -13,17 +14,16 @@ int main() {
     char arquivo[32];
     int x_barco, y_barco;
     int fim_de_jogo = FALSE;
-    int err = FALSE;
+    Status *sts;
 
     printf("Entre com o nome do arquivo que contém o mapa: ");
-    read_str(arquivo);
+    do {
+        do    
+            sts = read_str(arquivo);
+        while(trata_status(sts));
 
-    err = leia_mapa_arquivo(&mapa, arquivo);
-
-    while(err){
-        printf("Arquivo inválido. Insira o nome de um arquivo válido: ");
-        read_str(arquivo);
-    }
+        sts = leia_mapa_arquivo(&mapa, arquivo);
+    } while(trata_status(sts));
 
     posiciona_barco(mapa, &x_barco, &y_barco);
 

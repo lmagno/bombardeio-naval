@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include "libstatus.h"
 #include "libutils.h"
 #include "libmapa.h"
-
 
 // Tipo Mapa para guardar a matriz que representa o estado de um jogo
 // e suas dimensões mxn.
@@ -23,15 +23,18 @@ typedef struct MapaTag Mapa;
 //     int 0: em caso de sucesso.
 //     int 1: caso não consiga abrir o arquivo
 //     int 2: caso o mapa esteja em formato errado.
-int leia_mapa_arquivo(Mapa **mapa, char *nome){
+Status* leia_mapa_arquivo(Mapa **mapa, char *nome){
     *mapa = malloc(sizeof(Mapa));
     FILE *arq;
     char **M, c;
+	char *msg;
     int i, j, m, n;
 
     arq = fopen(nome, "r");
     if (arq == NULL) {
-        return 1;
+		msg = malloc(256*sizeof(char));
+		sprintf(msg, "Não foi possível abrir o arquivo '%s'.\n", nome);
+        return erro(1, msg);
     }
 
     fscanf(arq, "%d", &m);
@@ -51,9 +54,9 @@ int leia_mapa_arquivo(Mapa **mapa, char *nome){
             c = prox_elem(arq);
         }
         if (j != n) {
-            // Mensagens de erro ficam pro futuro
-            // printf("A linha %d tem %d elementos, equanto se esperava %d!\n", i+1, j, n);
-            return 2;
+            msg = malloc(256*sizeof(char));
+            sprintf(msg, "A linha %d tem %d elementos, equanto se esperava %d!\n", i+1, j, n);
+            return erro(2, msg);
         }
 
         if (c == '|') descarta_resto_linha(arq);
@@ -63,7 +66,7 @@ int leia_mapa_arquivo(Mapa **mapa, char *nome){
     (*mapa)->m = m;
     (*mapa)->n = n;
     fclose(arq);
-    return 0;
+    return sucesso();
 }
 
 // Recebe o ponteiro para um Mapa e imprime sua representação para a tela,
@@ -95,8 +98,9 @@ void escreva_mapa_tela(Mapa *mapa){
 // Retorna:
 //     0: em caso de sucesso
 //     1: caso não consiga abrir o arquivo (erro)
-int escreva_mapa_arquivo(char *nome, Mapa *mapa){
+Status* escreva_mapa_arquivo(char *nome, Mapa *mapa){
     char **M = matriz(mapa);
+	char *msg;
     int m = linhas(mapa),
         n = colunas(mapa);
     FILE *arq;
@@ -104,8 +108,9 @@ int escreva_mapa_arquivo(char *nome, Mapa *mapa){
 
     arq = fopen(nome, "a");
     if (arq == NULL) {
-        printf("Arquivo não pôde ser aberto! :/\n");
-        return 1;
+		msg = malloc(256*sizeof(char));
+        sprintf(msg, "Não foi possível abrir o arquivo '%s'.\n", nome);
+        return erro(1, msg);
     }
 
     fprintf(arq, "\n");
@@ -117,7 +122,7 @@ int escreva_mapa_arquivo(char *nome, Mapa *mapa){
     }
 
     fclose(arq);
-    return 0;
+    return sucesso();
 }
 
 // Recebe o ponteiro para um Mapa e libera a matriz nele contida,

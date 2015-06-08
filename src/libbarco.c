@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "libstatus.h"
 #include "libutils.h"
 #include "libmapa.h"
 #include "libbarco.h"
@@ -12,6 +13,7 @@ void posiciona_barco(Mapa *mapa, int *x, int *y){
     char posicionou = FALSE;
     int i, j, posicao, err;
     char ** M = matriz(mapa);
+    Status *sts;
 
     printf("Posições disponíveis: ");
     for (j = 0; j < colunas(mapa); j++)
@@ -21,8 +23,9 @@ void posiciona_barco(Mapa *mapa, int *x, int *y){
     printf("\n");
     while(!posicionou){
         printf("Digite a posição inicial do barco: \n");
-        while(err = read_int(&posicao)) {
-            printf("err = %d\n", err);
+        sts = read_int(&posicao);
+        while(trata_status(sts)) {
+            sts = read_int(&posicao);
         }
 
         if(M[0][posicao] == '.'){
@@ -37,6 +40,7 @@ void posiciona_barco(Mapa *mapa, int *x, int *y){
 }
 
 void rema_barco(Mapa *mapa, int *x_B, int *y_B){
+    Status *sts;    
     char ** M = matriz(mapa);
     char movimento;
     int i, j,
@@ -45,8 +49,10 @@ void rema_barco(Mapa *mapa, int *x_B, int *y_B){
 
 
     printf("Entre com um movimento para o barco: ");
-    read_char(&movimento);
-
+    do 
+        sts = read_char(&movimento);
+    while(trata_status(sts));
+  
     moveu = FALSE;
     while(!moveu){
 
@@ -80,7 +86,9 @@ void rema_barco(Mapa *mapa, int *x_B, int *y_B){
                 default:
                     printf("Movimento não reconhecido.\n");
                     printf("Entre com um dos seguintes: (c)ima, (b)aixo, (e)squerda, (d)ireita: ");
-                    read_char(&movimento);
+                    do 
+                        sts = read_char(&movimento);
+                    while(trata_status(sts)); 
                     break;
             }
         }
@@ -100,7 +108,9 @@ void rema_barco(Mapa *mapa, int *x_B, int *y_B){
         } else {
             printf("Esse movimento não é possível!\n");
             printf("Entre com outro movimento para o barco: \n");
-            read_char(&movimento);
+            do 
+                sts = read_char(&movimento);
+            while(trata_status(sts));
         }
     }
 

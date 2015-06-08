@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "libstatus.h"
 #include "libutils.h"
 
 // Aloca uma matriz char mxn
@@ -62,18 +63,20 @@ char prox_elem(FILE *arq) {
 // Retorna:
 //     0: em caso de sucesso
 //     1: caso não consiga abrir o arquivo (erro)
-int anexa_arquivo(char *nome, char *str) {
+Status* anexa_arquivo(char *nome, char *str) {
     FILE *arq;
+    char *msg;
 
     arq = fopen(nome, "a");
     if (arq == NULL) {
-        printf("Arquivo não pôde ser aberto! :/\n");
-        return 1;
+        msg = malloc(258*sizeof(char));
+        sprintf(msg, "Não foi possível abrir o arquivo '%s'.", nome);
+        return erro(1, msg);
     }
 
     fprintf(arq, "%s", str);
     fclose(arq);
-    return 0;
+    return sucesso();
 }
 
 // Lê um caracter da entrada padrão
@@ -85,7 +88,7 @@ int anexa_arquivo(char *nome, char *str) {
 //     -1: caso não tenha sido possível ler da stdin
 //      1: caso o número errado de caracteres tenha sido fornecido (0 ou mais
 //         de 1)
-int read_char(char *c) {
+Status* read_char(char *c) {
     char *line, c1, c2;
     size_t len;
     ssize_t read;
@@ -99,15 +102,15 @@ int read_char(char *c) {
             case 1:
                 *c = c1;
                 free(line);
-                return 0;
+                return sucesso();
             default:
                 free(line);
-                return 1;
+                return erro(1, "Número errado de caracteres fornecidos.");
         }
     }
     else {
         free(line);
-        return -1;
+        return erro(-1, "Não foi possível ler da stdin.");
     }
 }
 
@@ -120,7 +123,7 @@ int read_char(char *c) {
 //     -1: caso não tenha sido possível ler da stdin
 //      1: caso o número errado de números tenha sido fornecido (0 ou mais
 //         de 1)
-int read_int(int *d) {
+Status* read_int(int *d) {
     char *line;
     int d1, d2;
     size_t len;
@@ -135,15 +138,15 @@ int read_int(int *d) {
             case 1:
                 *d = d1;
                 free(line);
-                return 0;
+                return sucesso();
             default:
                 free(line);
-                return 1;
+                return erro(1, "Número errado de números fornecidos.");
         }
     }
     else {
         free(line);
-        return -1;
+        return erro(-1, "Não foi possível ler da stdin.");
     }
 }
 
@@ -155,7 +158,7 @@ int read_int(int *d) {
 //     -1: caso não tenha sido possível ler da stdin
 //      1: caso o número errado de strings tenha sido fornecido (0 ou mais
 //         de 1)
-int read_str(char *s) {
+Status* read_str(char *s) {
     char *line;
     char s1[256], c2;
     size_t len;
@@ -170,14 +173,14 @@ int read_str(char *s) {
             case 1:
                 strcpy(s, s1);
                 free(line);
-                return 0;
+                return sucesso();
             default:
                 free(line);
-                return 1;
+                return erro(1, "Número errado de strings fornecidas.");
         }
     }
     else {
         free(line);
-        return -1;
+        return erro(-1, "Não foi possível ler da stdin.");
     }
 }
