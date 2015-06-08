@@ -33,7 +33,7 @@ Status* leia_mapa_arquivo(Mapa **mapa, char *nome){
     arq = fopen(nome, "r");
     if (arq == NULL) {
 		msg = malloc(256*sizeof(char));
-		sprintf(msg, "Não foi possível abrir o arquivo '%s'.\n", nome);
+		sprintf(msg, "Não foi possível abrir o arquivo '%s'.", nome);
         return erro(1, msg);
     }
 
@@ -55,7 +55,7 @@ Status* leia_mapa_arquivo(Mapa **mapa, char *nome){
         }
         if (j != n) {
             msg = malloc(256*sizeof(char));
-            sprintf(msg, "A linha %d tem %d elementos, equanto se esperava %d!\n", i+1, j, n);
+            sprintf(msg, "A linha %d tem %d elementos, equanto se esperava %d!", i+1, j, n);
             return erro(2, msg);
         }
 
@@ -109,7 +109,7 @@ Status* escreva_mapa_arquivo(char *nome, Mapa *mapa){
     arq = fopen(nome, "a");
     if (arq == NULL) {
 		msg = malloc(256*sizeof(char));
-        sprintf(msg, "Não foi possível abrir o arquivo '%s'.\n", nome);
+        sprintf(msg, "Não foi possível abrir o arquivo '%s'.", nome);
         return erro(1, msg);
     }
 

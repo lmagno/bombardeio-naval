@@ -16,11 +16,11 @@ int main() {
     int fim_de_jogo = FALSE;
     Status *sts;
 
-    printf("Entre com o nome do arquivo que contém o mapa: ");
     do {
-        do    
+        do {
+            printf("Entre com o nome do arquivo que contém o mapa: ");
             sts = read_str(arquivo);
-        while(trata_status(sts));
+        } while(trata_status(sts));
 
         sts = leia_mapa_arquivo(&mapa, arquivo);
     } while(trata_status(sts));
