@@ -6,6 +6,7 @@
 CuSuite* test_utils_get_suite();
 CuSuite* test_mapa_get_suite();
 CuSuite* test_emb_get_suite();
+CuSuite* test_status_get_suite();
 
 void RunAllTests(void) {
     CuString *output = CuStringNew();
