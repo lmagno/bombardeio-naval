@@ -6,7 +6,6 @@
 
 int main() {
     Mapa *mapa;
-    char **M;
     char arquivo[32];
     int x_barco, y_barco;
     int fim_de_jogo = FALSE;

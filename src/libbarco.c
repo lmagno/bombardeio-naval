@@ -8,7 +8,7 @@
 
 void posiciona_barco(Mapa *mapa, int *x, int *y){
     char posicionou = FALSE;
-    int i, j, posicao, err;
+    int j, posicao;
     char ** M = matriz(mapa);
     Status *sts;
 
