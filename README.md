@@ -3,13 +3,30 @@
 Em ordem de importância
 - [ ] Colocar as condições de término do jogo (chegar ao final da linha e ficar três jogadas seguidas num beco, sejá lá o que isso signifique)
 - [ ] Fazer um menu pro jogo
-- [ ] Tratar os erros de forma mais decente, usando structs ou enum
+- [x] Tratar os erros de forma mais decente, usando structs ou enum
 - [ ] Fazer a documentação (pra usuário e pra desenvolvedor)
 - [ ] Deixar o jogo bonitinho pelo menos
 - [ ] Mudar o Makefile para usar bibliotecas dinâmicas
 - [ ] Mais testes!
 - [ ] Usar uma struct para representar pontos (x, y)
 
+# Status e tratamento de erros
+Agora temos a biblioteca `status`  , que introduz uma struct Status para representar o valor de retorno de uma função qualquer.
+Ela é composta de um valor (`int`) e uma mensagem (`string`). Como de costume,
+0 indica que a função terminou com sucesso e qualquer outro valor, um erro.
+
+Para facilitar seu uso, há algumas funções:
+* `sucesso`: retorna um `Status*` com valor 0 e sem mensagem.
+* `erro`: retorna um `Status*` com o valor (que deve ser diferente de zero) e a mensagem desejados.
+* `trata_status`: recebe um `Status*`, libera seu espaço na memória e retorna somente seu valor. Caso este seja diferente de zero, também imprime a mensagem associada para a `STDERR`.
+
+Idealmente todas as funções de mais alto nível (bibliotecas `mapa`, `barco` e `embarcacoes`) deveriam retornar um Status*, mas a maioria ainda está sem tratamento de erro e não está claro também onde exatamente erros poderiam surgir nelas. De qualquer forma, é bom sempre manter em mente uma situação extrema que pode ocorrer e a indicar com o respectivo erro.
+
+Alguns detalhes:
+* Atualmente não distinção entre os números que representam erro (qualquer inteiro diferente de zero), o que não segue muito os padrões de C, mas parece que as mensagens associadas tornam essa distinção desnecessária (a não ser que encontremos uma situação em que queiramos comportamentos diferentes dependendo do tipo de erro que ocorreu).
+* O código todo está definido em função de ponteiros de Status (`Status*`), sendo necessária a liberação do espaço em memória alocado dinamicamente para ele, mas o Fernando aponto que não é necessário e parece ser bem verdade. Entretanto, usar a struct diretamente apresenta dois problemas:
+  * Incompatibilidade estética com o padrão C e com a forma como já lidamos com a struct `Mapa` (ficaria `Status.valor` ao invés de `Status->valor`).
+  * Seria necessário exportar a forma interna da struct através do seu header, para que seja possível declarar variáveis desse tipo em outros locais (atualmente isso não é possível, porque ninguém fora a própria biblioteca sabe a estrutura interna da struct, ou seja, sua organização na memória. Então só é possível declarar ponteiros para ela, o que não requer informação alguma.). O problema aqui é que isso expõe a estrutura interna da struct, o que é no mínimo deselegante, e permite que os valores de seus campos sejam alterados.
 
 # bombardeio-naval
 Projeto para a matéria MAC0211 - Laboratório de Programação 1
