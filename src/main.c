@@ -1,9 +1,5 @@
 #include <stdio.h>
-#include "libstatus.h"
-#include "libutils.h"
-#include "libmapa.h"
 #include "libembarcacoes.h"
-#include "libbarco.h"
 
 #define FALSE 0
 #define TRUE 1

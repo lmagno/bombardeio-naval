@@ -1,7 +1,5 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "libstatus.h"
-#include "libutils.h"
 #include "libmapa.h"
 
 // Tipo Mapa para guardar a matriz que representa o estado de um jogo

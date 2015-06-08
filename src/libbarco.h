@@ -1,3 +1,5 @@
+#include "libmapa.h"
+
 #ifndef libbarco_h__
 #define libbarco_h__
 

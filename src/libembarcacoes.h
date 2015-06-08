@@ -1,3 +1,5 @@
+#include "libbarco.h"
+
 #ifndef libembarcacoes_h__
 #define libembarcacoes_h__
 

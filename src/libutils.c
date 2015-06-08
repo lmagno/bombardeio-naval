@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "libstatus.h"
 #include "libutils.h"
 
 // Aloca uma matriz char mxn
