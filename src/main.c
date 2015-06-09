@@ -57,7 +57,7 @@ int main() {
         if(acao[0] == 'q')
     	    break;
         else
-	    printf("\n\nObviamente você não sabe escrever na língua portuguesa,\n\n tente novamente quando aprender\n\n\n\n\n\n\n\n\n\n");
+	    printf("\n\nObviamente você não sabe escrever na língua portuguesa,\nou tem sérios problemas de coordenação motora\n tente novamente quando estiver apto\n\n\n\n\n\n\n\n\n\n");
     }
     
     return 0;
