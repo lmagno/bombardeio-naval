@@ -12,18 +12,18 @@ void posiciona_barco(Mapa *mapa, int *x, int *y){
     char ** M = matriz(mapa);
     Status *sts;
 
-    printf("Posições disponíveis: ");
+    printf("Posições iniciais disponíveis: ");
     for (j = 0; j < colunas(mapa); j++)
         if (M[0][j] == '.')
             printf("%d ", j);
 
     printf("\n");
     while(!posicionou){
-        printf("Digite a posição inicial do barco: ");
-        sts = read_int(&posicao);
-        while(trata_status(sts)) {
+
+        do {
+            printf("Digite a posição inicial do barco: ");
             sts = read_int(&posicao);
-        }
+        } while(trata_status(sts));
 
         if(M[0][posicao] == '.'){
             M[0][posicao] = 'B';
@@ -32,17 +32,20 @@ void posiciona_barco(Mapa *mapa, int *x, int *y){
             posicionou = TRUE;
         }
         else
-            printf("Posição não disponível.");
+            printf("Posição não disponível.\n");
     }
 }
 
-void rema_barco(Mapa *mapa, int *x_B, int *y_B){
+void rema_barco(Mapa *mapa, int *x_B, int *y_B, int *beco_3x){
     Status *sts;
     char ** M = matriz(mapa);
     char movimento;
     int i, j,
         dx, dy,
-        moveu, escolheu;
+        beco,
+        beco_n,
+        moveu,
+        escolheu;
 
 
     printf("Entre com um movimento para o barco: ");
@@ -50,6 +53,8 @@ void rema_barco(Mapa *mapa, int *x_B, int *y_B){
         sts = read_char(&movimento);
     while(trata_status(sts));
 
+    beco = FALSE;
+    beco_n = 0;
     moveu = FALSE;
     while(!moveu){
 
@@ -93,7 +98,6 @@ void rema_barco(Mapa *mapa, int *x_B, int *y_B){
         j = *x_B + dx;
         i = *y_B + dy;
 
-        printf("%d %d\n", i, j);
         if(i >= 0 && i <  linhas(mapa) &&
            j >= 0 && j < colunas(mapa) &&
            M[i][j] != 'D' && M[i][j] != 'C' &&
@@ -101,10 +105,25 @@ void rema_barco(Mapa *mapa, int *x_B, int *y_B){
 
             M[i][j] = 'B';
             M[*y_B][*x_B] = 'T';
+            beco = FALSE;
+            beco_n = 0;
             moveu = TRUE;
         } else {
+            if (beco) {
+                if(beco_n == 2) {
+                    printf("Você ficou presx três vezes seguidas!\n");
+                    *beco_3x = TRUE;
+                    return;
+                }
+
+                beco_n++;
+            } else {
+                beco = TRUE;
+                beco_n++;
+            }
+
             printf("Esse movimento não é possível!\n");
-            printf("Entre com outro movimento para o barco: \n");
+            printf("Entre com outro movimento para o barco: ");
             do
                 sts = read_char(&movimento);
             while(trata_status(sts));

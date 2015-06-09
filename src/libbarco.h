@@ -5,7 +5,7 @@
 
 void posiciona_barco(Mapa *mapa, int *x, int *y);
 
-void rema_barco(Mapa *mapa, int *x_B, int *y_b);
+void rema_barco(Mapa *mapa, int *x_B, int *y_b, int *beco_3x);
 
 
 #endif

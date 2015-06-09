@@ -159,7 +159,7 @@ char identifica_alvo_atingido(Mapa *mapa, int x_tiro, int y_tiro, char* arquivo)
 /* dispara_tiros - Dispara 3 tiros, imprime as mensagens correspondentes aos efeitos dos
 tiros e atualiza a matriz; Retorna FALSE (0) caso o jogo continue,
 retorna TURE (1) caso o jogo termine. */
-int dispara_tiros(Mapa *mapa, char *arquivo){
+void dispara_tiros(Mapa *mapa, char *arquivo, int *acertou_barco){
     int i;
     int x_tiro, y_tiro;
     int alvo_atingido;
@@ -184,7 +184,7 @@ int dispara_tiros(Mapa *mapa, char *arquivo){
             afunda_hidro_aviao(mapa,x_tiro,y_tiro,0);
             break;
         case 'B':
-            fim_de_jogo = TRUE;
+            *acertou_barco = TRUE;
             break;
         default:
             break;
@@ -194,5 +194,5 @@ int dispara_tiros(Mapa *mapa, char *arquivo){
         escreva_mapa_arquivo(arquivo, mapa);
     }
 
-    return fim_de_jogo;
+    return;
 }

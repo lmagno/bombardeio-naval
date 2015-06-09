@@ -1,7 +1,7 @@
 # TO-DO
 
 Em ordem de importância
-- [ ] Colocar as condições de término do jogo (chegar ao final da linha e ficar três jogadas seguidas num beco, sejá lá o que isso signifique)
+- [x] Colocar as condições de término do jogo (chegar ao final da linha e ficar três jogadas seguidas num beco, sejá lá o que isso signifique)
 - [ ] Fazer um menu pro jogo
 - [x] Tratar os erros de forma mais decente, usando structs ou enum
 - [ ] Fazer a documentação (pra usuário e pra desenvolvedor)
