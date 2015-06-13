@@ -1,9 +1,9 @@
 CC:=gcc
-CFLAGS:=-g -Wall
+CFLAGS:=-g -Wall -l
 MAIN:=main
 SRC:=./src/
 SOURCES:=$(SRC)$(MAIN).c
-LIBS:= embarcacoes barco mapa utils status
+LIBS:= embarcacoes barco mapa utils status Xpm X11
 DEPS:= $(LIBS:%=$(SRC)lib%.a) $(LIBS:%=$(SRC)lib%.h)
 LFLAGS:= $(LIBS:%=-l%)
 

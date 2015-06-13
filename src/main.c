@@ -1,5 +1,7 @@
 #include <stdio.h>
 #include "libembarcacoes.h"
+#include <unistd.h>
+#include "xwc.h"
 
 #define FALSE 0
 #define TRUE 1
@@ -15,47 +17,56 @@ int main() {
         acertou_barco;
     char acao = 'q';
     Status *sts;
+    WINDOW *w;
+    PIC inicio;
+    MASK msk;
+    w = InitGraph(400,400, "Bombardeiro Naval");
+    inicio = ReadPic(w, "tela_inicial.xpm", NULL);
+    msk = NewMask(inicio, 400, 400);
+    SetMask(w,msk);
+    PutPic(w, inicio, 0,0, 100, 100, 200, 0);
+
+
     printf("        B O M B A R D E I R O   N A V A L        \n\n\n");
-    while(1){
-	do {
-	    printf("digite s para sair ou digite j para jogar:");
-            sts = read_char(&acao);
-	}while(trata_status(sts)&&(acao!='j'||acao!='q'));
-        if(acao == 'j'){
+    
+    do {
+	printf("digite s para sair ou digite j para jogar:");
+        *sts = read_char(&acao);
+        WFillRect(w,0,0,400,400,WNamedColor("NavyBlue"));
+    }while(trata_status(sts));
+    if(acao == 'j'){
 
-    	    abre_mapa(&mapa);
-    	    seleciona_arquivo_saida(saida);
-    	    posiciona_barco(mapa, &x_barco, &y_barco);
+        abre_mapa(&mapa);
+        seleciona_arquivo_saida(saida);
+    	posiciona_barco(mapa, &x_barco, &y_barco);
 
-    	    escreva_mapa_tela(mapa);
-    	    escreva_mapa_arquivo(saida, mapa);
+    	escreva_mapa_tela(mapa);
+    	escreva_mapa_arquivo(saida, mapa);
 
-    	    beco_3x = FALSE;
-    	    acertou_barco = FALSE;
-    	    while(1){
-                rema_barco(mapa, &x_barco, &y_barco, &beco_3x);
-                if (beco_3x) {
-                    printf("Você perdeu o jogo. D:\n");
-                    break;
-                }
-
-                dispara_tiros(mapa, saida, &acertou_barco);
-                if(acertou_barco) {
-                    printf("Você perdeu o jogo. D:\n");
-                    break;
-                }
-        
-                if (y_barco == linhas(mapa) - 1) {
-                    printf("\nParabéns! Você ganhou! :D\n");
-                    break;
-                }
+    	beco_3x = FALSE;
+    	acertou_barco = FALSE;
+    	while(1){
+            rema_barco(mapa, &x_barco, &y_barco, &beco_3x);
+            if (beco_3x) {
+                printf("Você perdeu o jogo. D:\n");
+                break;
             }
 
-            libera_mapa(mapa);
+            dispara_tiros(mapa, saida, &acertou_barco);
+            if(acertou_barco) {
+                printf("Você perdeu o jogo. D:\n");
+                break;
+            }
+            if (y_barco == linhas(mapa) - 1) {
+                printf("\nParabéns! Você ganhou! :D\n");
+                break;
+            }
         }
-        else if(acao == 'q')
-    	    break;
+
+        libera_mapa(mapa);
     }
+  
+   
     
     return 0;
 }
