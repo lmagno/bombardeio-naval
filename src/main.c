@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include "libembarcacoes.h"
 #include <unistd.h>
-#include "xwc.h"
+#include "libxwc.h"
 
 #define FALSE 0
 #define TRUE 1
@@ -28,7 +28,7 @@ int main() {
 
 
     printf("        B O M B A R D E I R O   N A V A L        \n\n\n");
-    
+
     do {
 	printf("digite s para sair ou digite j para jogar:");
         *sts = read_char(&acao);
@@ -65,9 +65,9 @@ int main() {
 
         libera_mapa(mapa);
     }
-  
-   
-    
+
+
+
     return 0;
 }
 

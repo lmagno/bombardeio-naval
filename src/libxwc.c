@@ -1,7 +1,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <X11/XKBlib.h>
-#include "xwc.h"
+#include "libxwc.h"
 
 static Display *display = NULL;
 static Colormap cmap;
@@ -31,14 +31,14 @@ void WRect(WINDOW *w, int x, int y, int wd, int h, int c)
   XDrawRectangle(display, w->ptr.window, w->gc, x, y, wd, h);
   XFlush(display);
 }
-  
+
 void WFillRect(WINDOW *w, int x, int y, int wd, int h, int c)
 {
   XSetForeground(display, w->gc, c);
   XFillRectangle(display, w->ptr.window, w->gc, x, y, wd, h);
   XFlush(display);
 }
-  
+
 
 void WArc(WINDOW *w, int x, int y, int a1, int a2, int wd, int h, int c)
 {
@@ -84,7 +84,7 @@ PIC NewPic(WINDOW *w, int wd, int h)
   p = (PIC)malloc(sizeof(PIC));
   p->ptr.p = XCreatePixmap(display, w->ptr.window, wd, h,
 						   DefaultDepth(display, DefaultScreen(display)));
-  p->gc = XCreateGC(display, p->ptr.p, GCForeground |GCBackground| GCPlaneMask | 
+  p->gc = XCreateGC(display, p->ptr.p, GCForeground |GCBackground| GCPlaneMask |
 		     GCSubwindowMode | GCClipXOrigin |  GCClipYOrigin |
 		     GCClipMask | GCFunction | GCGraphicsExposures, &gcv);
 
@@ -113,7 +113,7 @@ MASK NewMask(WINDOW *w, int wd, int h)
 
   nm = (MASK) malloc(sizeof(MASK));
   nm->ptr.m = XCreatePixmap(display,w->ptr.window,wd,h,1);
-  nm->gc = XCreateGC(display, nm->ptr.m, GCForeground |GCBackground| GCPlaneMask | 
+  nm->gc = XCreateGC(display, nm->ptr.m, GCForeground |GCBackground| GCPlaneMask |
 		     GCSubwindowMode | GCClipXOrigin |  GCClipYOrigin |
 		     GCClipMask | GCFunction | GCGraphicsExposures, &gcv);
   XSetForeground(display, nm->gc,0);
@@ -175,7 +175,7 @@ WINDOW* InitGraph(int WIDTH, int HEIGHT, char *nome)
   XSetWindowAttributes atts;
   Window window;
   GC gc;
-  
+
   nwin = (WINDOW *) malloc(sizeof(WINDOW));
   if (!nwin) return NULL;
 
@@ -185,7 +185,7 @@ WINDOW* InitGraph(int WIDTH, int HEIGHT, char *nome)
   }
 
   cmap = DefaultColormap(display, DefaultScreen(display));
-  window = XCreateSimpleWindow(display, DefaultRootWindow(display), 
+  window = XCreateSimpleWindow(display, DefaultRootWindow(display),
 			       50, 50, WIDTH, HEIGHT,	0, 8, 0);
   atts.backing_store = Always ;
   atts.backing_planes = 0xFFFFFFF;
@@ -197,7 +197,7 @@ WINDOW* InitGraph(int WIDTH, int HEIGHT, char *nome)
   XClearWindow(display, window);
   XMapWindow(display, window);
   XFlush(display);
-  
+
   gcv.function = GXcopy;
   gcv.plane_mask = 0xFFFFFFFF;
   gcv.subwindow_mode = ClipByChildren;
@@ -207,7 +207,7 @@ WINDOW* InitGraph(int WIDTH, int HEIGHT, char *nome)
   gcv.background = 0;
   gcv.graphics_exposures = False;
 
-  gc = XCreateGC(display, window, GCForeground |GCBackground| GCPlaneMask | 
+  gc = XCreateGC(display, window, GCForeground |GCBackground| GCPlaneMask |
 		 GCSubwindowMode | GCClipXOrigin |  GCClipYOrigin |
 		 GCClipMask | GCFunction | GCGraphicsExposures, &gcv);
 
@@ -234,7 +234,7 @@ PIC ReadPic(WINDOW *w, char *fname, MASK m)
   Pixmap pm;
   XGCValues gcv;
 
-  if (XpmReadFileToPixmap(display, w->ptr.p, fname, &pm, 
+  if (XpmReadFileToPixmap(display, w->ptr.p, fname, &pm,
 						  m ? &(m->ptr.m) : NULL, NULL))
 	 return NULL;
 
@@ -246,11 +246,11 @@ PIC ReadPic(WINDOW *w, char *fname, MASK m)
   gcv.foreground = 1;
   gcv.background = 0;
   gcv.graphics_exposures = False;
-  
+
   p = (PIC)malloc(sizeof(PIC));
   p->ptr.p = pm;
 
-  p->gc = XCreateGC(display, p->ptr.p, GCForeground |GCBackground| GCPlaneMask | 
+  p->gc = XCreateGC(display, p->ptr.p, GCForeground |GCBackground| GCPlaneMask |
 		     GCSubwindowMode | GCClipXOrigin |  GCClipYOrigin |
 		     GCClipMask | GCFunction | GCGraphicsExposures, &gcv);
   return p;
@@ -268,7 +268,7 @@ PIC MountPic(WINDOW *w, char **data, MASK m)
   Pixmap pm;
   XGCValues gcv;
 
-  if (XpmCreatePixmapFromData(display, w->ptr.p, data,&pm, 
+  if (XpmCreatePixmapFromData(display, w->ptr.p, data,&pm,
 							  m? & (m->ptr.m) : 0, NULL))
 	 return NULL;
 
@@ -280,10 +280,10 @@ PIC MountPic(WINDOW *w, char **data, MASK m)
   gcv.foreground = 1;
   gcv.background = 0;
   gcv.graphics_exposures = False;
-  
+
   p = (PIC)malloc(sizeof(PIC));
   p->ptr.p =  pm;
-  p->gc = XCreateGC(display, p->ptr.p, GCForeground |GCBackground| GCPlaneMask | 
+  p->gc = XCreateGC(display, p->ptr.p, GCForeground |GCBackground| GCPlaneMask |
 		     GCSubwindowMode | GCClipXOrigin |  GCClipYOrigin |
 		     GCClipMask | GCFunction | GCGraphicsExposures, &gcv);
 
