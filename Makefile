@@ -4,7 +4,7 @@ MAIN:=main
 SRC:=./src/
 SOURCES:=$(SRC)$(MAIN).c
 LIBS:= embarcacoes barco mapa utils status
-DEPS:= $(LIBS:%=$(SRC)lib%.a) $(LIBS:%=$(SRC)lib%.h)
+DEPS:= $(LIBS:%=$(SRC)lib%.so) $(LIBS:%=$(SRC)lib%.h)
 LFLAGS:= $(LIBS:%=-l%)
 
 .PHONY: all clean very-clean
@@ -12,16 +12,19 @@ LFLAGS:= $(LIBS:%=-l%)
 all: $(MAIN)
 
 $(MAIN): $(SOURCES) $(DEPS)
-	$(CC) $(CFLAGS) -static -o $(MAIN) $(SOURCES) -L$(SRC) $(LFLAGS)
+	$(CC) $(CFLAGS) -Wl,-rpath=$(SRC) -o $(MAIN) $(SOURCES) -L$(SRC) $(LFLAGS)
 
-.o.a:
-	ar rcs $@ $<
+%.so: %.o
+	$(CC) -shared -o $@ $<
+
+%.o: %.c
+	$(CC) $(CFLAGS) -c -fPIC -o $@ $<
 
 clean:
-	rm -f src/*.a src/*.o
+	rm -f src/*.o src/*.so
 
 very-clean:
-	rm -f $(TEST) $(MAIN) src/*.a src/*.o
+	rm -f $(TEST) $(MAIN) src/*.o src/*.so
 
 TEST:=testes
 TESTDIR:=./tests/
@@ -30,5 +33,5 @@ CUTESTDIR=./tests/cutest-1.5/
 CUTESTDEPS=$(CUTESTDIR)CuTest.c $(CUTESTDIR)CuTest.h
 
 testes: $(TESTSOURCES) $(DEPS) $(CUTESTDEPS)
-	$(CC) $(CFLAGS) -o $(TEST) $(TESTSOURCES) $(CUTESTDEPS) -L$(SRC) $(LFLAGS)
+	$(CC) $(CFLAGS) -o $(TEST) $(TESTSOURCES) $(CUTESTDEPS) -Wl,-rpath=$(SRC) -L$(SRC) $(LFLAGS)
 	./testes
