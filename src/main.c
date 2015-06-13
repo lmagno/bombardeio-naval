@@ -13,16 +13,15 @@ int main() {
     int x_barco, y_barco;
     int beco_3x,
         acertou_barco;
-    char acao[1] ;
-    acao[0] = 'q';
+    char acao = 'q';
     Status *sts;
+    printf("        B O M B A R D E I R O   N A V A L        \n\n\n");
     while(1){
 	do {
-            printf("        B O M B A R D E I R O   N A V A L        \n\n\n");
-	    printf("digite q para sair ou digite n para jogar:");
-            sts = read_str(acao);
-	}while(trata_status(sts));
-        if(acao[0] == 'n'){
+	    printf("digite s para sair ou digite j para jogar:");
+            sts = read_char(&acao);
+	}while(trata_status(sts)&&(acao!='j'||acao!='q'));
+        if(acao == 'j'){
 
     	    abre_mapa(&mapa);
     	    seleciona_arquivo_saida(saida);
@@ -54,10 +53,8 @@ int main() {
 
             libera_mapa(mapa);
         }
-        if(acao[0] == 'q')
+        else if(acao == 'q')
     	    break;
-        else
-	    printf("\n\nObviamente você não sabe escrever na língua portuguesa,\nou tem sérios problemas de coordenação motora\n tente novamente quando estiver apto\n\n\n\n\n\n\n\n\n\n");
     }
     
     return 0;
