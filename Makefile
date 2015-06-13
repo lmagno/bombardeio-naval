@@ -1,21 +1,27 @@
 CC:=gcc
-CFLAGS:=-g -Wall -l
+CFLAGS:=-g -Wall
 MAIN:=main
 SRC:=./src/
 SOURCES:=$(SRC)$(MAIN).c
 LIBS:= embarcacoes barco mapa utils status
 DEPS:= $(LIBS:%=$(SRC)lib%.so) $(LIBS:%=$(SRC)lib%.h)
-LFLAGS:= $(LIBS:%=-l%)
+LFLAGS:= $(LIBS:%=-l%) -lm -lXpm -lX11 
 
 .PHONY: all clean very-clean
 
 all: $(MAIN)
 
-$(MAIN): $(SOURCES) $(DEPS)
-	$(CC) $(CFLAGS) -Wl,-rpath=$(SRC) -o $(MAIN) $(SOURCES) -L$(SRC) $(LFLAGS)
+
+$(MAIN): $(SOURCES) $(DEPS) xwc.o
+	$(CC) $(CFLAGS) -Wl,-rpath=$(SRC) -o $(MAIN) $(SOURCES) -L$(SRC) $(LFLAGS) 
 
 %.so: %.o
 	$(CC) -shared -o $@ $<
+
+xwc.o : xwc.c
+
+xwc.c: 
+	$(CC) -g -Wall  -I  -O2 -o -lm -lXpm -lX11
 
 %.o: %.c
 	$(CC) $(CFLAGS) -c -fPIC -o $@ $<
