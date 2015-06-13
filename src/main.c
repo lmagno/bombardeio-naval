@@ -1,7 +1,8 @@
 #include <stdio.h>
+#include "libxwc.h"
+#undef Status
 #include "libembarcacoes.h"
 #include <unistd.h>
-#include "libxwc.h"
 
 #define FALSE 0
 #define TRUE 1
@@ -30,8 +31,8 @@ int main() {
     printf("        B O M B A R D E I R O   N A V A L        \n\n\n");
 
     do {
-	printf("digite s para sair ou digite j para jogar:");
-        *sts = read_char(&acao);
+	    printf("digite s para sair ou digite j para jogar:");
+        sts = read_char(&acao);
         WFillRect(w,0,0,400,400,WNamedColor("NavyBlue"));
     }while(trata_status(sts));
     if(acao == 'j'){
