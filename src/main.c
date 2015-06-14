@@ -24,7 +24,7 @@ int main() {
     w = InitGraph(400,400, "Bombardeiro Naval");
     inicio = ReadPic(w, "tela_inicial.xpm", NULL);
     msk = NewMask(inicio, 400, 400);
-    SetMask(w,msk);
+    SetMask(inicio,msk);
     PutPic(w, inicio, 0,0, 100, 100, 200, 0);
 
 
@@ -68,7 +68,7 @@ int main() {
     }
 
 
-
+    CloseGraph();
     return 0;
 }
 
