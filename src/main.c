@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include "libxwc.h"
-#undef Status
 #include "libembarcacoes.h"
 #include <unistd.h>
+#include <mcheck.h>
 
 #define FALSE 0
 #define TRUE 1
@@ -11,6 +11,7 @@ void abre_mapa(Mapa **mapa);
 void seleciona_arquivo_saida(char *saida);
 
 int main() {
+    mtrace();
     Mapa *mapa;
     char saida[50];
     int x_barco, y_barco;
@@ -24,16 +25,17 @@ int main() {
     w = InitGraph(400,400, "Bombardeiro Naval");
     inicio = ReadPic(w, "tela_inicial.xpm", NULL);
     msk = NewMask(inicio, 400, 400);
+    WFillRect(w,0,0,400,400,WNamedColor("NavyBlue"));
     SetMask(inicio,msk);
     PutPic(w, inicio, 0,0, 100, 100, 200, 0);
 
 
     printf("        B O M B A R D E I R O   N A V A L        \n\n\n");
-
+    
     do {
 	    printf("digite s para sair ou digite j para jogar:");
         sts = read_char(&acao);
-        WFillRect(w,0,0,400,400,WNamedColor("NavyBlue"));
+        
     }while(trata_status(sts));
     if(acao == 'j'){
 
@@ -66,9 +68,11 @@ int main() {
 
         libera_mapa(mapa);
     }
-
+    UnSetMask(inicio);
+    FreePic(inicio);
 
     CloseGraph();
+    muntrace();
     return 0;
 }
 
