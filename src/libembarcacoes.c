@@ -1,22 +1,29 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "libxwc.h"
+#include <unistd.h>
+
+#undef Status                // Por quê?
+
 #include "libembarcacoes.h"
+
 
 #define FALSE 0
 #define TRUE  1
+#define SPR_SIZE 32    // O tamanho de cada sprite;
 
 /* afunda_destroyer: Aparentemente OK, necessita de testes;
 -Identação corrigida, serve de protótipo para as outras */
 
 /* d: distância do tiro em relação à casa a ser afetada pela função */
-void afunda_destroyer(Mapa *mapa, int x, int y, int d){
+void afunda_destroyer(Mapa *mapa, int x, int y, int d,WINDOW *w,PIC explosion){
     int i, j;
     char **M;
     M = matriz(mapa);
-
+    
     if(M[y][x] == 'D' || d == 0){
-
+        PutPic(w, explosion,0, 0, SPR_SIZE, SPR_SIZE, x*SPR_SIZE, y*SPR_SIZE);
         M[y][x] = '*';
 
         for(i = y - 1; i <= y + 1; i++)
@@ -24,17 +31,17 @@ void afunda_destroyer(Mapa *mapa, int x, int y, int d){
                 if(i >= 0 && i <  linhas(mapa) &&
                    j >= 0 && j < colunas(mapa) &&
                    M[i][j] == 'D')
-                    afunda_destroyer(mapa, j, i, d + 1);
+                    afunda_destroyer(mapa, j, i, d + 1, w, explosion);
     }
 }
 
-void afunda_cruzador(Mapa *mapa, int x, int y, int d){
+void afunda_cruzador(Mapa *mapa, int x, int y, int d,WINDOW *w,PIC explosion){
     int i, j;
     char **M;
     M = matriz(mapa);
 
     if(M[y][x] == 'C' || d == 0){
-
+        PutPic(w, explosion,0, 0, SPR_SIZE, SPR_SIZE, x*SPR_SIZE, y*SPR_SIZE);
         M[y][x] = '*';
 
         for(i = y - 1; i <= y + 1; i++)
@@ -42,17 +49,17 @@ void afunda_cruzador(Mapa *mapa, int x, int y, int d){
                 if(i >= 0 && i <  linhas(mapa) &&
                    j >= 0 && j < colunas(mapa) &&
                    M[i][j] == 'C')
-                    afunda_cruzador(mapa, j, i, d + 1);
+                    afunda_cruzador(mapa, j, i, d + 1, w, explosion);
     }
 }
 
-void afunda_porta_aviao(Mapa *mapa, int x, int y, int d){
+void afunda_porta_aviao(Mapa *mapa, int x, int y, int d,WINDOW *w,PIC explosion){
     int i, j;
     char **M;
     M = matriz(mapa);
 
     if(M[y][x] == 'P' || d == 0){
-
+        PutPic(w, explosion,0, 0, SPR_SIZE, SPR_SIZE, x*SPR_SIZE, y*SPR_SIZE);
         M[y][x] = '*';
 
         for(i = y - 1; i <= y + 1; i++)
@@ -60,17 +67,17 @@ void afunda_porta_aviao(Mapa *mapa, int x, int y, int d){
                 if(i >= 0 && i <  linhas(mapa) &&
                    j >= 0 && j < colunas(mapa) &&
                    M[i][j] == 'P')
-                    afunda_porta_aviao(mapa, j, i, d + 1);
+                    afunda_porta_aviao(mapa, j, i, d + 1, w, explosion);
     }
 }
 
-void afunda_hidro_aviao(Mapa *mapa, int x, int y, int d){
+void afunda_hidro_aviao(Mapa *mapa, int x, int y, int d,WINDOW *w,PIC explosion){
     int i, j;
     char **M;
     M = matriz(mapa);
 
     if(M[y][x] == 'H' || d == 0){
-
+        PutPic(w, explosion,0, 0, SPR_SIZE, SPR_SIZE, x*SPR_SIZE, y*SPR_SIZE);
         M[y][x] = '*';
 
         for(i = y - 1; i <= y + 1; i++)
@@ -78,7 +85,7 @@ void afunda_hidro_aviao(Mapa *mapa, int x, int y, int d){
                 if(i >= 0 && i <  linhas(mapa) &&
                    j >= 0 && j < colunas(mapa) &&
                    M[i][j] == 'H')
-                    afunda_hidro_aviao(mapa, j, i, d + 1);
+                    afunda_hidro_aviao(mapa, j, i, d + 1, w,explosion);
     }
 }
 
@@ -159,7 +166,7 @@ char identifica_alvo_atingido(Mapa *mapa, int x_tiro, int y_tiro, char* arquivo)
 /* dispara_tiros - Dispara 3 tiros, imprime as mensagens correspondentes aos efeitos dos
 tiros e atualiza a matriz; Retorna FALSE (0) caso o jogo continue,
 retorna TURE (1) caso o jogo termine. */
-void dispara_tiros(Mapa *mapa, char *arquivo, int *acertou_barco){
+void dispara_tiros(Mapa *mapa, char *arquivo, int *acertou_barco,WINDOW *w,PIC explosion){
     int i;
     int x_tiro, y_tiro;
     int alvo_atingido;
@@ -172,21 +179,23 @@ void dispara_tiros(Mapa *mapa, char *arquivo, int *acertou_barco){
 
         switch(alvo_atingido){
         case 'D':
-            afunda_destroyer(mapa,x_tiro,y_tiro,0);
+            afunda_destroyer(mapa,x_tiro,y_tiro,0, w, explosion);
             break;
         case 'C':
-            afunda_cruzador(mapa,x_tiro,y_tiro,0);
+            afunda_cruzador(mapa,x_tiro,y_tiro,0, w, explosion);
             break;
         case 'P':
-            afunda_porta_aviao(mapa,x_tiro,y_tiro,0);
+            afunda_porta_aviao(mapa,x_tiro,y_tiro,0, w, explosion);
             break;
         case 'H':
-            afunda_hidro_aviao(mapa,x_tiro,y_tiro,0);
+            afunda_hidro_aviao(mapa,x_tiro,y_tiro,0, w, explosion);
             break;
         case 'B':
             *acertou_barco = TRUE;
+            PutPic(w, explosion,0, 0, SPR_SIZE, SPR_SIZE, x_tiro*SPR_SIZE, y_tiro*SPR_SIZE);
             break;
         default:
+            PutPic(w, explosion,0, 0, SPR_SIZE, SPR_SIZE, x_tiro*SPR_SIZE, y_tiro*SPR_SIZE);
             break;
         }
 
