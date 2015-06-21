@@ -1,9 +1,7 @@
 /* XPM */
 static char * mascara_xpm[] = {
-"16 16 5 1",
-" 	c darkslategrey",
+"16 16 4 1",
 ".	s None	c None",
-"X	c blue",
 "o	c brown",
 "O	c #F0F003039898",
 "g      c gray",

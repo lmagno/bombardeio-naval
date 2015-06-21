@@ -37,6 +37,7 @@ int main(int ac, char **av) {
     int w_width,w_height;
     int x_anterior,y_anterior;
     int cor_do_caminho = 2000;
+    int cor_de_fundo = 30000;
 
     printf("        B O M B A R D E I O   N A V A L        \n\n\n");
     
@@ -57,6 +58,7 @@ int main(int ac, char **av) {
 
         // xwc - abre a janela principal
         w = InitGraph(w_width, w_height, "Bombardeio Naval");
+        WFillRect(w, 0, 0, w_width, w_height, cor_de_fundo);
         barco_v = ReadPic(w,"barco1.xpm",NULL);
         barco_h = ReadPic(w,"barco2.xpm",NULL);
         explosion = ReadPic(w,"explosion.xpm",NULL);
